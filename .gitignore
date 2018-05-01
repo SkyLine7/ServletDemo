@@ -1,0 +1,27 @@
+*.class
+
+# Package Files #
+*.war
+*.ear
+
+# IDEA Fils #
+
+/.idea
+*.iml
+/build
+
+/bin/
+/.git
+/.gradle
+/.classpath
+/.project
+/.settings/
+/src/main/java/META-INF/
+
+
+# Mac Fils #
+/.DS_Store
+
+src/main/resources/.project
+
+/bin/
