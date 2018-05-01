@@ -1,8 +1,16 @@
-# 新手渣作
+## 目前的进度
+- 实现了 *@RequsetMapping @AutoWired @Service @Controller @PathVariable* 注解
+- 方法参数绑定支持： String,int/Integer,double/Double,long/Long 四种类型
+- 支持返回页面和JSON数据
+- 整合了 Thymeleaf 模版引擎
+- 用原生JS(ES5)封装了一下ajax
+- 整合了layer 
+- 其他杂七杂八的小功能
 
-* 运行步骤：clone master分支项目到ide,使用Debug As Server 即可。
-* 访问主页为：http://localhost:8080/ServletDemo/templates/test/welcome.html
-* 项目环境：Eclipse Oxygen 2017 + Gradle 3.5 + Git 2.1 + Tomcat 7 + JDK 8 + Servlet 3.1 + slf4j 	       1.7.22
-* 项目特点：原生Servlet + 原生JavaScript 模拟controller
-* 已经实现功能： 表单原生Js Ajax封装,全站编码过滤，前后台交互，整合thymeleaf模版，支持返回页面及json对象。
-* 预期目标： thymeleaf页面布局，自定义实现简易springmvc,自定义实现及整合spring DI, Ioc 功能, 原生JavaScript实现文件上传及获取进度。
+## 后续的计划
+- （批量）文件上传 和 文件下载
+- 请求方法限定，参考SpringMVC @RequestMapping(value = "/xxx.html", **method = {RequestMethod.POST, RequestMethod.GET}**)
+- 方法参数绑定支持 JavaBean 类型
+- 页面使用Thymeleaf布局
+
+先做这么多，已经够我做的了  =.=
