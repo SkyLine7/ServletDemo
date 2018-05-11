@@ -69,6 +69,8 @@ public class ContainerListener implements ServletContextListener{
 	public void contextInitialized(ServletContextEvent sce) {
 		//获取ServletContext
 		ServletContext servletContext = sce.getServletContext();
+		//thymeleaf 测试
+		servletContext.setAttribute("cxtPath", "thymeleaf测试正常");
 		//mvc初始化
 		initMvcFramework();
 	    //添加Servlet静态资源映射
@@ -76,7 +78,7 @@ public class ContainerListener implements ServletContextListener{
 	}
 	
 	private void addServletMapping(ServletContext sc){
-		//通过default 映射静态资源
+		//通过default servlet 映射静态资源
 		ServletRegistration regist = sc.getServletRegistration("default");
 		regist.addMapping("/resources/static/*");
 		regist.addMapping("/templates/*");
@@ -281,7 +283,6 @@ public class ContainerListener implements ServletContextListener{
 		//判断请求路径中是否带有占位符
         if (reqPath.matches(".+\\{\\w+\\}.*")) {
         	String mReqPath = reqPath;
-        	
             //将请求路径中的占位符 {\w+} 转换为正则表达式 (\\w+)
         	reqPath = StringUtil.replaceAll(reqPath, "\\{\\w+\\}", "(\\\\w+)");
         	
@@ -293,7 +294,6 @@ public class ContainerListener implements ServletContextListener{
                 pathParams.add(matcher.group(0).replaceAll("\\{", "").replaceAll("\\}", ""));
 			}
         	System.out.println(pathParams);
-        	
             regexpActionMap.put(new Requestor(reqPath, reqMethod), new Handler(actionClass, actionMethod,0,pathParams));
         } else {
             commonActionMap.put(new Requestor(reqPath, reqMethod), new Handler(actionClass, actionMethod,0));

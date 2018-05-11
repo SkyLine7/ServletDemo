@@ -12,13 +12,13 @@
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/resources/static/assets/images/logo.ico}" />
 	<body>
 		<a th:href="@{/demo1/queryList2?name=panda}">返回页面</a>
-		<input type="text" th:value="${currentDate}" />
-		<!-- <input type="text" th:value="${application.cxtPath}" /> -->
-		<a th:href="@{/testServlet?method=testJsonMethod1}">该页面不存在</a>
-		<a href="javascript:void(0);" onclick="sendAjax1();">发送AJAX请求(原生js DomString)</a>
-		<a href="javascript:void(0);" onclick="sendAjax2();">发送AJAX请求(原生js FormData)</a>
+		<input type="text" th:value="${application.cxtPath}" />
+		<a th:href="@{/demo2/queryList2?name=panda}">该页面不存在</a>
+		<a href="javascript:void(0);" onclick="sendAjax1();">发送AJAX请求(原生js DomString GET)</a>
+		<a href="javascript:void(0);" onclick="sendAjax2();">发送AJAX请求(原生js DomString POST)</a>
+		<a href="javascript:void(0);" onclick="javascript:alert('还在写');">发送AJAX请求(原生js FormData GET/POST)</a>
 		<a href="javascript:void(0);" onclick="sendAjax3();">发送AJAX请求(Jquery DomString)</a>
-		<a href="javascript:void(0);" onclick="sendAjax4();">发送AJAX请求(Jquery FormData)</a>
+		<a href="javascript:void(0);" onclick="javascript:alert('还在写');">发送AJAX请求(Jquery FormData)</a>
 		<script type="text/javascript" th:src="@{/resources/static/assets/js/common/jquery-2.0.3.min.js}"></script>
 		<script type="text/javascript" th:src="@{/resources/static/assets/js/plugins/layer/layer.js}"></script>
 		<script type="text/javascript" th:src="@{/resources/static/assets/js/common/util.js}"></script>

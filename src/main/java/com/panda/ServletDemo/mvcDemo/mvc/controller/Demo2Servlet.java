@@ -14,8 +14,13 @@ import com.panda.ServletDemo.mvcframework.annotation.MyRequsetMapping;
 @MyRequsetMapping("/demo2")
 public class Demo2Servlet {
 	
+	/**
+	 * 首页接口
+	 * @author pcongda
+	 */
 	@MyRequsetMapping("/one")
 	public String indexPage(HttpServletRequest req,HttpServletResponse resp) {
+		System.out.println("普通GET请求可以啦");
 		return "/test/index";
 	}
 }

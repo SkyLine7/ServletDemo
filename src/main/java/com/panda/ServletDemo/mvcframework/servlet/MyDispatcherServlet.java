@@ -49,20 +49,18 @@ public class MyDispatcherServlet extends HttpServlet{
 		
 		//获取项目名称
 		String projectName = req.getContextPath();
-		
-		//替换项目名称为：/ 为最终的路径,多个//替换为一个/
+		//替换项目名称为：/为最终的路径,多个//替换为一个/
 		reqPath = reqPath.replace(projectName, "").replaceAll("/+", "/");
 		
-		//去掉请求路径末尾的/
+		//当访问的不是项目路径时,去掉请求路径末尾的/
         if(reqPath.endsWith("/") && reqPath.length() > 1) {
         	reqPath = reqPath.substring(0, reqPath.length() - 1);
         }
-		
         logger.debug("开始调用请求：方法：{},路径：{}", reqMethod, reqPath);
         
-        //将"/"请求重定向到首页
-        if (reqPath.equals("/")) {
-			resp.sendRedirect(reqPath+"/templates/test/index.html");
+        //将"/"请求重定向到首页接口
+        if (reqPath.equals("/") || reqPath.equals("")) {
+        	resp.sendRedirect(req.getContextPath()+"/demo2/one");
             return;
         }
         //获取处理器
@@ -71,20 +69,6 @@ public class MyDispatcherServlet extends HttpServlet{
         if (handler == null) {
         	logger.error(String.format("调用：%s方法不存在",req.getRequestURI()));
         	throw new RequsetException("请求不存在");
-			/*resp.setStatus(HttpServletResponse.SC_NOT_FOUND);//404
-			String isXHR = req.getHeader("X-Requested-With");
-			if(isXHR == null){
-				resp.sendRedirect(req.getContextPath()+"/templates/common/404.html");
-			}else{
-				JSONObject json = new JSONObject();
-				json.put("msg",ResultResponseUtil.requsetNotFound("没有找到该方法").getMsg());
-				json.put("code",ResultResponseUtil.requsetNotFound("没有找到该方法").getCode());
-				json.put("data",ResultResponseUtil.requsetNotFound("没有找到该方法").getData());
-				resp.setContentType("application/json;charset=utf-8");
-				resp.getWriter().println(json.toString());
-				resp.getWriter().flush();
-			}
-			return;*/
         }
         try {
         	//调用处理器进入用户方法

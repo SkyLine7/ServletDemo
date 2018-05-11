@@ -242,7 +242,7 @@
 		},
 		
 		
-		//formData方式
+		//formData上传
 		getAjaxWithFile:function(options){
 			
 			DialogHelper.Loading(true);

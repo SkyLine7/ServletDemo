@@ -96,6 +96,17 @@ public class DefaultHandlerInvoker implements HandlerInvoker{
 	    			paramValue[entry.getValue()] = (convert(clazz,value));
     			}
     		}
+    		/*for(Map.Entry<String, Object> obj:reqParamMap.entrySet()) {
+    			String value = obj.getValue().toString();
+    			//方法定义的参数没有请求中的参数，跳过
+    			for (MethodParam entry : paramMap.keySet()) {
+	    			if(!entry.getName().equals(obj.getKey())) {
+	    				continue;
+	    			}
+	    			Class<?> clazz = entry.getClazz();
+	    			paramValue[paramMap.get(entry)] = (convert(clazz,value));
+    			}
+    		}*/
         }
 		return paramValue;
 	}

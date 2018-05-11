@@ -51,15 +51,6 @@ public class DefaultViewResolver implements ViewResolver{
 					} catch (IOException e) {
 						logger.error("重定向失败，原因是:{}",e.getMessage());
 						throw new ServiceException("服务器错误!",e);
-
-						/*response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);//500
-						try {
-							response.sendRedirect(request.getContextPath()+"/templates/common/500.html");
-						} catch (IOException e1) {
-							e1.printStackTrace();
-							throw new RequsetException("重定向失败", e1);
-						}
-						return;*/
 					}
 				}
 			}
