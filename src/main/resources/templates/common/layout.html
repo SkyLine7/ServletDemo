@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      lang="en">
+    <!-- head css -->
+    <head th:replace="~{/fragment/head :: head}"></head>
+    <body>
+        <!-- 悬浮加载小图片 -->
+        <div id="ajax-loader" style="cursor:progress; position:fixed; top:-50%; left:-50%; width:200%; height:200%; background:#fff; z-index:10000; overflow:hidden;">
+            <img th:src="@{/resources/static/assets/js/plugins/layer/theme/default/loading-2.gif}" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto;" />
+        </div>
+
+        <!-- 头部固定navigate -->
+        <div id="header">
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <div class="collapse navbar-collapse navbar-left">
+                        <p class="navbar-company">
+                            <span>个人商城</span>
+                        </p>
+                    </div>
+                    <div class="collapse navbar-collapse navbar-left">
+                        <div class="navbar-system-name">
+                            <span>后台管理系统</span>
+                        </div>
+                    </div>
+                    <div data-layout-fragment="navbar_menu"></div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- 空格 -->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="space"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 内容部分 -->
+        <div class="main-container">
+            <div class="container">
+                <div class="row main-container-row">
+                    <div data-layout-fragment="page-container" id="page-container"></div>
+                </div>
+            </div>
+            <br/>
+            <br/>
+        </div>
+        <!-- footer -->
+        <footer th:replace="~{/fragment/foot :: footer}"></footer>
+        <!-- base script -->
+        <script type="text/javascript" th:src="@{/resources/static/assets/js/common/bootstrap.min.js}"></script>
+        <script type="text/javascript" th:src="@{/resources/static/assets/js/common/dosmore.min.js}"></script>
+        <script type="text/javascript" th:src="@{/resources/static/assets/js/plugins/layer/layer.js}"></script>
+        <script type="text/javascript" th:src="@{/resources/static/assets/js/common/util.js}"></script>
+        <script type="text/javascript" th:src="@{/resources/static/assets/js/common/ajaxCommon-panda.js}"></script>
+        <!-- extend script -->
+        <extendscript data-layout-fragment="extendscript"></extendscript>
+    </body>
+</html>

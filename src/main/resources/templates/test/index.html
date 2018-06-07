@@ -1,29 +1,28 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	  xmlns:th="http://www.thymeleaf.org" lang="en">
-	<title>首页</title>
-	<meta name="renderer" content="webkit" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="" />
-	<meta name="description" content="" />
-    <meta name="author" content="panda" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{/resources/static/assets/images/logo.ico}" />
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	  layout:decorate="/common/layout"
+	  lang="en">
+	<head>
+		<css data-layout-fragment="extendcss">
+			<title>测试页面</title>
+		</css>
+	</head>
 	<body>
-		<a th:href="@{/demo1/queryList2?name=panda}">返回页面</a>
-		<input type="text" th:value="${application.cxtPath}" />
-		<a th:href="@{/demo2/queryList2?name=panda}">该页面不存在</a>
-		<a href="javascript:void(0);" onclick="sendAjax1();">发送AJAX请求(原生js DomString GET)</a>
-		<a href="javascript:void(0);" onclick="sendAjax2();">发送AJAX请求(原生js DomString POST)</a>
-		<a href="javascript:void(0);" onclick="javascript:alert('还在写');">发送AJAX请求(原生js FormData GET/POST)</a>
-		<a href="javascript:void(0);" onclick="sendAjax3();">发送AJAX请求(Jquery DomString)</a>
-		<a href="javascript:void(0);" onclick="javascript:alert('还在写');">发送AJAX请求(Jquery FormData)</a>
-		<script type="text/javascript" th:src="@{/resources/static/assets/js/common/jquery-2.0.3.min.js}"></script>
-		<script type="text/javascript" th:src="@{/resources/static/assets/js/plugins/layer/layer.js}"></script>
-		<script type="text/javascript" th:src="@{/resources/static/assets/js/common/util.js}"></script>
-		<script type="text/javascript" th:src="@{/resources/static/assets/js/common/ajaxCommon-panda.js}"></script>
-		<script type="text/javascript" th:src="@{/resources/static/assets/js/common/index.js}"></script>
-		<script type="text/javascript" th:src="@{/resources/static/assets/js/common/AjaxTest.js}"></script>
+		<div data-layout-fragment="page-container">
+			<a th:href="@{/demo1/queryList2?name=panda}">返回页面</a>
+			<input type="text" th:value="${application.cxtPath}" />
+			<a th:href="@{/demo2/queryList2?name=panda}">该页面不存在</a>
+			<a href="javascript:void(0);" onclick="sendAjax1();">发送AJAX请求(原生js DomString GET)</a>
+			<a href="javascript:void(0);" onclick="sendAjax2();">发送AJAX请求(原生js DomString POST)</a>
+			<a href="javascript:void(0);" onclick="javascript:alert('还在写');">发送AJAX请求(原生js FormData GET/POST)</a>
+			<a href="javascript:void(0);" onclick="sendAjax3();">发送AJAX请求(Jquery DomString)</a>
+			<a href="javascript:void(0);" onclick="javascript:alert('还在写');">发送AJAX请求(Jquery FormData)</a>
+		</div>
+		<extendscript data-layout-fragment="extendscript">
+			<script th:src="@{/resources/static/assets/js/common/index.js}"></script>
+			<script th:src="@{/resources/static/assets/js/common/AjaxTest.js}"></script>
+		</extendscript>
 	</body>
 </html>

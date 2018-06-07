@@ -1,17 +1,16 @@
 package com.panda.ServletDemo.about.clone;
+
 /**
- * 浅拷贝: 原对象
- * @author pcongda
+ * 浅克隆
+ *@author pcongda
  *
  */
-/**
- * @author pcongda
- *
- */
+
 public class CloneClass implements Cloneable{
 	
 	private String name;
 	private int age;
+
 	
 	public CloneClass(String name, int age) {
 		super();

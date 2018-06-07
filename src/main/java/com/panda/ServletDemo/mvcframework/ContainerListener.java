@@ -1,36 +1,5 @@
 package com.panda.ServletDemo.mvcframework;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.ServletRegistration;
-import javax.servlet.annotation.WebListener;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.templateresolver.ITemplateResolver;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
-
 import com.panda.ServletDemo.mvcframework.annotation.MyAutoWired;
 import com.panda.ServletDemo.mvcframework.annotation.MyController;
 import com.panda.ServletDemo.mvcframework.annotation.MyRequsetMapping;
@@ -38,6 +7,30 @@ import com.panda.ServletDemo.mvcframework.annotation.MyService;
 import com.panda.ServletDemo.mvcframework.bean.Requestor;
 import com.panda.ServletDemo.mvcframework.enums.MyRequestMethod;
 import com.panda.ServletDemo.utils.StringUtil;
+import nz.net.ultraq.thymeleaf.LayoutDialect;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.templateresolver.ITemplateResolver;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.ServletRegistration;
+import javax.servlet.annotation.WebListener;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * web容器监听器
@@ -313,6 +306,7 @@ public class ContainerListener implements ServletContextListener{
 	//获取模版
  	public static TemplateEngine templateEngine(ServletContext servletContext) {
         TemplateEngine engine = new TemplateEngine();
+	    engine.addDialect(new LayoutDialect());
         engine.setTemplateResolver(templateResolver(servletContext));
         return engine;
     }

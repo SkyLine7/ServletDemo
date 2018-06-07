@@ -9,7 +9,7 @@
 /.idea
 *.iml
 /build
-
+/out
 /bin/
 /.git
 /.gradle

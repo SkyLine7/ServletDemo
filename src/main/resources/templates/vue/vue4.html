@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="/common/layout"
+      lang="en">
+    <head>
+        <css data-layout-fragment="extendcss">
+            <title>vue页面4</title>
+        </css>
+    </head>
+    <body>
+        <div data-layout-fragment="page-container">
+            <h1>hello vue4.js !</h1>
+
+            <!-- 计算属性缓存 -->
+            <div id="countField">
+                <p>Original message: "{{ message }}"</p>
+                <p>Computed reversed message: "{{ reversedMessage }}"</p>
+            </div>
+
+            <!-- 方法 -->
+            <div id="countMethod">
+                <p>Original message: "{{ message }}"</p>
+                <p>Computed reversed message: "{{ reversedMessage() }}"</p>
+            </div>
+
+            <!-- 计算属性的setter -->
+            <div id="demo">{{ fullName }}</div>
+
+        </div>
+        <extendscript data-layout-fragment="extendscript">
+            <script th:src="@{/resources/static/assets/js/plugins/vuejs/vue.min.js}"></script>
+            <script th:src="@{/resources/static/assets/js/common/vue/vue4.js}"></script>
+        </extendscript>
+    </body>
+</html>

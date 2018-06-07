@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="/common/layout"
+      lang="en">
+<head>
+    <css data-layout-fragment="extendcss">
+        <title>vue页面3</title>
+    </css>
+</head>
+<body>
+<div data-layout-fragment="page-container">
+    <h1>hello vue4.js !</h1>
+</div>
+<extendscript data-layout-fragment="extendscript">
+    <script th:src="@{/resources/static/assets/js/plugins/vuejs/vue.min.js}"></script>
+    <script th:src="@{/resources/static/assets/js/common/vue/vue3.js}"></script>
+</extendscript>
+</body>
+</html>

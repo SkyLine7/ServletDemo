@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="/common/layout"
+      lang="en">
+    <head>
+        <css data-layout-fragment="extendcss">
+            <title>vue页面1</title>
+        </css>
+    </head>
+    <body>
+        <div data-layout-fragment="page-container">
+            <h1>hello vue4.js !</h1>
+            <div id="app1">
+                {{ message }}
+            </div>
+
+            <div id="app2">
+                <span v-bind:title="message1">
+                    鼠标停在此处查看绑定信息！
+                </span>
+            </div>
+
+            <div id="app3">
+                <p v-if="seen">现在你看到我了</p>
+            </div>
+
+
+            <div id="app4">
+                <ol>
+                    <li v-for="todo in todos">
+                        {{ todo.text }}
+                    </li>
+                </ol>
+            </div>
+
+            <div id="app5">
+                <p>{{ message }}</p>
+                <button type="button" v-on:click="reverseMessage">反转消息</button>
+            </div>
+
+            <div id="app6">
+                <p>{{ message }}</p>
+                <input v-model="message">
+            </div>
+
+        </div>
+        <extendscript data-layout-fragment="extendscript">
+            <script th:src="@{/resources/static/assets/js/plugins/vuejs/vue.min.js}"></script>
+            <script th:src="@{/resources/static/assets/js/common/vue/vue1.js}"></script>
+        </extendscript>
+    </body>
+</html>
