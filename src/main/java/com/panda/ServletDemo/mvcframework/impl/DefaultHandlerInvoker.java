@@ -1,29 +1,26 @@
 package com.panda.ServletDemo.mvcframework.impl;
 
+import com.panda.ServletDemo.mvcframework.Handler;
+import com.panda.ServletDemo.mvcframework.HandlerInvoker;
+import com.panda.ServletDemo.mvcframework.ViewResolver;
+import com.panda.ServletDemo.mvcframework.bean.MethodParam;
+import com.panda.ServletDemo.mvcframework.enums.MyRequestMethod;
+import com.panda.ServletDemo.mvcframework.exception.RequsetException;
+import com.panda.ServletDemo.mvcframework.util.InstanceFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.net.URLDecoder;
-import java.util.Enumeration;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.panda.ServletDemo.mvcframework.Handler;
-import com.panda.ServletDemo.mvcframework.HandlerInvoker;
-import com.panda.ServletDemo.mvcframework.ViewResolver;
-import com.panda.ServletDemo.mvcframework.bean.MethodParam;
-import com.panda.ServletDemo.mvcframework.exception.RequsetException;
-import com.panda.ServletDemo.mvcframework.util.InstanceFactory;
 
 /**
  * 默认的处理器执行器
@@ -39,6 +36,8 @@ public class DefaultHandlerInvoker implements HandlerInvoker{
 	
 	@Override
 	public void invokerhandler(HttpServletRequest request, HttpServletResponse response, Handler handler) throws Exception {
+		//检查是否hander不存在或请求方法类型不匹配
+		checkHanderStatus(handler,request);
 		//获取Action相关信息
 		Class<?> actionCls = handler.getClazz();
 		Method method = handler.getMethod();
@@ -55,7 +54,7 @@ public class DefaultHandlerInvoker implements HandlerInvoker{
         //解析视图
         viewResolver.resolverView(request, response, returnObj);
 	}
-	
+
 	/**
 	 * 创建参数列表
 	 * @author pcongda
@@ -235,5 +234,19 @@ public class DefaultHandlerInvoker implements HandlerInvoker{
             throw new RequsetException(message);
         }
     }
-	
+
+	private void checkHanderStatus(Handler handler,HttpServletRequest request) {
+		//未找到方法 跳转到 404 页面
+		if (handler == null) {
+			logger.error(String.format("调用：%s请求方法不存在",request.getRequestURI()));
+			throw new RequsetException("请求不存在");
+		}
+
+		// 请求方法不在指定内，抛出异常
+		if (handler.getTypeRange() == 1) {
+			logger.error(String.format("调用：%s请求方法类型不匹配",request.getRequestURI()));
+			MyRequestMethod[] myMethod = handler.getReqMethodTypes();
+			throw new RequsetException(String.format("请求方法类型不匹配，需要方法类型:%s,实际方法类型:%s", Arrays.toString(myMethod),request.getMethod()));
+		}
+	}
 }

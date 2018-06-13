@@ -1,14 +1,15 @@
 package com.panda.ServletDemo.mvcframework.impl;
 
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.panda.ServletDemo.mvcframework.ContainerListener;
 import com.panda.ServletDemo.mvcframework.Handler;
 import com.panda.ServletDemo.mvcframework.HandlerMapping;
 import com.panda.ServletDemo.mvcframework.bean.Requestor;
 import com.panda.ServletDemo.mvcframework.enums.MyRequestMethod;
+import org.slf4j.LoggerFactory;
+
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 默认处理器映射器
@@ -16,6 +17,8 @@ import com.panda.ServletDemo.mvcframework.enums.MyRequestMethod;
  *
  */
 public class DefaultHandlerMapping implements HandlerMapping{
+
+	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DefaultHandlerMapping.class);
 
 	@SuppressWarnings({ "static-access" })
 	@Override
@@ -32,6 +35,18 @@ public class DefaultHandlerMapping implements HandlerMapping{
             //判断请求路径是否匹配
             if (pathMatcher.matches()) {
                 handler = entity1.getValue();
+	            MyRequestMethod[] myMethod = requstor.getRequsetMethod();
+	            handler.setReqMethodTypes(myMethod);
+	            //判断请求方法类型是否包含页面请求类型
+	            if(myMethod.length > 0){
+		            handler.setTypeRange(1);
+		            for (int i = 0; i < myMethod.length; i++) {
+			            if(reqMethod.equals(myMethod[i].name())){
+				            handler.setTypeRange(0);
+				            break;
+			            }
+		            }
+	            }
                 //设置请求路径匹配器
                 if (handler != null) {
                     handler.setMatcher(pathMatcher);
@@ -39,24 +54,24 @@ public class DefaultHandlerMapping implements HandlerMapping{
                 break;
             }
 		}
-		
-		for (Map.Entry<Requestor, Handler> entity2 : actionMap.entrySet()) {
-			//找hander.Mathcher不为null的
-			if(entity2.getValue().getMatcher() != null) {
-				Requestor requstor = entity2.getKey();
-				MyRequestMethod[] myMethod = requstor.getRequsetMethod();
-				//判断请求方法类型是否包含页面请求类型
-				if(myMethod.length > 0){
-					handler.setTypeRange(1);
-					for (int i = 0; i < myMethod.length; i++) {
-						if(reqMethod.equals(myMethod[i].values())){
-							handler.setTypeRange(0);
-							break;
-						}
-					}
-				}
-			}
-		}
+//		for (Map.Entry<Requestor, Handler> entity2 : actionMap.entrySet()) {
+//			//找hander.Mathcher不为null的
+//			if(entity2.getValue().getMatcher().matches()) {
+//				Requestor requstor = entity2.getKey();
+//				MyRequestMethod[] myMethod = requstor.getRequsetMethod();
+//				handler.setReqMethodTypes(myMethod);
+//				//判断请求方法类型是否包含页面请求类型
+//				if(myMethod.length > 0){
+//					handler.setTypeRange(1);
+//					for (int i = 0; i < myMethod.length; i++) {
+//						if(reqMethod.equals(myMethod[i].name())){
+//							handler.setTypeRange(0);
+//							break;
+//						}
+//					}
+//				}
+//			}
+//		}
 		return handler;
 	}
 

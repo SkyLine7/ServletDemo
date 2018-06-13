@@ -58,7 +58,6 @@
 
 
 function sendAjax1(){
-	
 	var jsonData = {
 		name: "any",
 		age: 88,

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="/common/layout"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>重定向页面</title>
+</head>
+<body>
+    <h1>这是重定向页面</h1>
+    <h1 th:text="${session.errorMsg}"></h1>
+    <h1 th:text="${msg}"></h1>
+</body>
+</html>

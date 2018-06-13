@@ -1,6 +1,12 @@
 package com.panda.ServletDemo.mvcframework.servlet;
 
-import java.io.IOException;
+import com.panda.ServletDemo.mvcframework.Handler;
+import com.panda.ServletDemo.mvcframework.HandlerExceptionResolver;
+import com.panda.ServletDemo.mvcframework.HandlerInvoker;
+import com.panda.ServletDemo.mvcframework.HandlerMapping;
+import com.panda.ServletDemo.mvcframework.util.InstanceFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -9,16 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.panda.ServletDemo.mvcframework.Handler;
-import com.panda.ServletDemo.mvcframework.HandlerExceptionResolver;
-import com.panda.ServletDemo.mvcframework.HandlerInvoker;
-import com.panda.ServletDemo.mvcframework.HandlerMapping;
-import com.panda.ServletDemo.mvcframework.exception.RequsetException;
-import com.panda.ServletDemo.mvcframework.util.InstanceFactory;
+import java.io.IOException;
 
 
 /**
@@ -58,18 +55,14 @@ public class MyDispatcherServlet extends HttpServlet{
         }
         logger.debug("开始调用请求：方法：{},路径：{}", reqMethod, reqPath);
         
-        //将"/"请求重定向到首页接口
+        //将"/"请求转发到首页接口
         if (reqPath.equals("/") || reqPath.equals("")) {
-        	resp.sendRedirect(req.getContextPath()+"/demo2/one");
+        	//resp.sendRedirect(req.getContextPath()+"/demo2/one");
+        	req.getRequestDispatcher(req.getContextPath()+"/demo2/one").forward(req,resp);
             return;
         }
         //获取处理器
-        Handler handler = handlerMapping.getHandler(reqMethod, reqPath);
-        //未找到方法 跳转到 404 页面
-        if (handler == null) {
-        	logger.error(String.format("调用：%s方法不存在",req.getRequestURI()));
-        	throw new RequsetException("请求不存在");
-        }
+		Handler	handler = handlerMapping.getHandler(reqMethod, reqPath);
         try {
         	//调用处理器进入用户方法
 			handlerInvoker.invokerhandler(req, resp, handler);

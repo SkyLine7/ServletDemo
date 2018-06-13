@@ -1,19 +1,15 @@
 package com.panda.ServletDemo.mvcDemo.mvc.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.alibaba.fastjson.JSON;
 import com.panda.ServletDemo.entity.User;
 import com.panda.ServletDemo.mvcDemo.mvc.service.Demo1Service;
-import com.panda.ServletDemo.mvcframework.annotation.MyAutoWired;
-import com.panda.ServletDemo.mvcframework.annotation.MyController;
-import com.panda.ServletDemo.mvcframework.annotation.MyPathVariable;
-import com.panda.ServletDemo.mvcframework.annotation.MyRequestParam;
-import com.panda.ServletDemo.mvcframework.annotation.MyRequsetMapping;
+import com.panda.ServletDemo.mvcframework.annotation.*;
 import com.panda.ServletDemo.mvcframework.bean.ResultResponse;
 import com.panda.ServletDemo.mvcframework.enums.MyRequestMethod;
 import com.panda.ServletDemo.utils.ResultResponseUtil;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @MyController
 @MyRequsetMapping(value="/demo1")
@@ -22,7 +18,7 @@ public class Demo1Servlet {
 	@MyAutoWired
 	private Demo1Service demo1Service;
 	
-	@MyRequsetMapping(value="/queryList1")
+	@MyRequsetMapping(value="/queryList1",method = {MyRequestMethod.GET})
 	public ResultResponse queryList1(String name,Integer age,String hegiht,HttpServletResponse resp,HttpServletRequest req){
 		req.setAttribute("name", name);
 		return ResultResponseUtil.success("Ajax GET请求可以啦", new User(name, age, hegiht));
@@ -39,7 +35,7 @@ public class Demo1Servlet {
 	public String queryList3(HttpServletRequest req,HttpServletResponse resp,@MyPathVariable("id") Integer id,@MyPathVariable("name") String name) {
 		req.setAttribute("name", name);
 		req.setAttribute("id", id);
-		return "/test/a";
+		return "r:/demo1/test/a?name="+name;
 	}
 	
 	@MyRequsetMapping(value="/queryList4")
@@ -49,10 +45,46 @@ public class Demo1Servlet {
 		return ResultResponseUtil.success("Ajax POST请求可以了", user);
 	}
 	
-	//method={MyRequestMethod.GET}功能待实现
-	@MyRequsetMapping(value="/queryList3/{id}",method={MyRequestMethod.GET})
+	@MyRequsetMapping(value="/queryList3/{id}",method={MyRequestMethod.POST})
 	public String queryList4(HttpServletRequest req,HttpServletResponse resp,@MyPathVariable("id") Integer id, String name) {
 		System.out.println(id+":"+name);
 		return "/test/index";
+	}
+
+	@MyRequsetMapping(value="/test/a")
+	public String to404(HttpServletRequest req,HttpServletResponse resp,String name) {
+		req.setAttribute("msg","信息1");
+		req.setAttribute("name",name);
+		req.getSession().setAttribute("errorMsg","测试数据1");
+		return "/common/404";
+	}
+
+	@MyRequsetMapping(value="/test/b")
+	public String toRed(HttpServletRequest req,HttpServletResponse resp) {
+		req.setAttribute("msg","信息2");
+		req.getSession().setAttribute("errorMsg","测试数据2");
+		return "r:/redirectTest.html";
+	}
+
+	/**
+	 *  请求 404 接口
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
+	@MyRequsetMapping(value="/404.html")
+	public String to404Page(HttpServletRequest req,HttpServletResponse resp) {
+		return "/common/404";
+	}
+
+	/**
+	 *  请求 500 接口
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
+	@MyRequsetMapping(value="/500.html")
+	public String to500Page(HttpServletRequest req,HttpServletResponse resp) {
+		return "/common/500";
 	}
 }

@@ -19,7 +19,6 @@
 	        return false;
 	    }
 	}
-	
 	//GET请求拼接字符串:e.g:&A=a&B=b
 	function toUrlData(obj){
 	    if (obj == null){
@@ -35,7 +34,6 @@
 	    }else{
 	    	throw new Error("参数不是对象类型!");
 	    }
-	    
 	} 
 	
 	//默认传入参数
@@ -57,8 +55,7 @@
 	}
 	
 	//原型方法
-	AjaxCommon.prototype = {	
-		
+	AjaxCommon.prototype = {
 		_inital: function(options){
 			//判断是否传入了参数
 			if(!options) {
@@ -68,13 +65,12 @@
 			self.defaultSettings = Object.assign({},defaultSettings,options,true);
 			//定义错误信息
 			self.error = null;
-			
 			//判断参数是否传入正确
 			if(self.defaultSettings 
 			   && self.defaultSettings.url 
 			   && self.defaultSettings.data 
 			   && typeof(self.defaultSettings.responseType) === "string"
-			   && (self.defaultSettings.type.toUpperCase() == "GET" || self.defaultSettings.type.toUpperCase() == "POST")
+			   && (self.defaultSettings.type.toUpperCase() == "GET" || self.defaultSettings.type.toUpperCase() == "POST")  //put,delete请求先不管
 			   && isNumber(self.defaultSettings.timeOut)
 			   && typeof(self.defaultSettings.async) === "boolean"){
 				
@@ -92,11 +88,11 @@
 		
 		//GET请求
 		getGetAjax: function(options){
-			
+			//开启遮罩层
 			DialogHelper.Loading(true);
-			
+			//参数校验
 			self._inital(options);
-			
+			//创建xhr对象
 			var xhr = new XMLHttpRequest();
 			//设置超时时间:单位:毫秒(ms)
 			xhr.timeout = self.defaultSettings.timeOut;
@@ -104,43 +100,38 @@
 			xhr.responseType = self.defaultSettings.responseType;
 			//创建异步GET请求
 			xhr.open("GET",self.defaultSettings.url + '?' + toUrlData(self.defaultSettings.data) + '&rdm=' + Math.random(),self.defaultSettings.async);
-			//设置请求头:
+			//设置固定请求头:
 			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 		    xhr.setRequestHeader("Cache-Control", "no-cache");
 		    
-		    //设置请求头
+		    //设置用户添加的请求头
 	    	for(var i in self.defaultSettings.header){
 		    	xhr.setRequestHeader(i,self.defaultSettings.header[i]);
 	    	}
-		    
 		    
 			//注册请求加载完成回调函数
 		    xhr.onload = function(e){
 				if(xhr.readyState==4){
 					var res = this.response;
-					if(res == null){
-						window.location.href = "/templates/common/500.html";
-					}else if(this.status==200 && res.code==200){
-						DialogHelper.Loading(false);
+					//关闭遮罩层
+                    DialogHelper.Loading(false);
+                    if(this.status==200 && res.code==200){
 						self.defaultSettings.callback(this.status,this.response);
-					}else if(this.status==404 || res.code==404){
-						window.location.href = "/templates/common/404.html";
-					}else if(this.status==500 || res.code==500){
-						window.location.href = "/templates/common/500.html";
-					}else{
-						window.location.href = "/templates/common/unKnownError.html";
+					}else {
+						DialogHelper.Fail(res.msg);
 					}
 				}	
 			};
 			//注册超时回调函数
 			xhr.ontimeout = function(e){
-				window.location.replace("/templates/common/timeout.html");
-			};
+                DialogHelper.Fail("请求超时，请重试！");
+
+            };
 			//注册异常回调函数
 			xhr.onerror = function(e){
-				window.location.replace("/templates/common/500.html");
-			};
+                DialogHelper.Fail("服务器异常，请重试！");
+            };
 			
 			/*//获取请求进度回调函数:上传文件时适用
 			xhr.upload.addEventListener("progress",function(e){
@@ -160,7 +151,7 @@
 				self.defaultSettings.progress(percent);
 			};
 			
-			//发送数据:
+			//发送数据
 			try{
 				xhr.send(null);
 			}catch(e){
@@ -170,11 +161,8 @@
 		
 		//POST请求
 		getPostAjax: function(options){
-			
 			DialogHelper.Loading(true);
-			
 			self._inital(options);
-			
 			var xhr = new XMLHttpRequest();
 			//设置超时时间:单位:毫秒(ms)
 			xhr.timeout = self.defaultSettings.timeOut;
@@ -196,25 +184,21 @@
 		    xhr.onload = function(e){
 				if(xhr.readyState==4){
 					var res = this.response;
-					if(this.status==200 && res.code==200){
-						DialogHelper.Loading(false);
+                    DialogHelper.Loading(false);
+                    if(this.status==200 && res.code==200){
 						self.defaultSettings.callback(this.status,this.response);
-					}else if(this.status==404 || res.code==404){
-						window.location.href = "/templates/common/404.html";
-					}else if(this.status==500 || res.code==500){
-						window.location.href = "/templates/common/500.html";
-					}else{
-						window.location.href = "/templates/common/unKnownError.html";
+					}else {
+                        DialogHelper.Fail(res.msg);
 					}
 				}	
 			};
 			//注册超时回调函数
 			xhr.ontimeout = function(e){
-				window.location.replace("/templates/common/timeout.html");
+                DialogHelper.Fail("请求超时，请重试！");
 			};
 			//注册异常回调函数
 			xhr.onerror = function(e){
-				window.location.replace("/templates/common/500.html");
+                DialogHelper.Fail("服务器异常，请重试！");
 			};
 			
 			/*//获取请求进度回调函数:上传文件时适用
@@ -244,17 +228,12 @@
 		
 		//formData上传
 		getAjaxWithFile:function(options){
-			
 			DialogHelper.Loading(true);
-			
 			self._inital(options);
-			
 			//创建formData对象
 			var formData = new FormData();
-			
 			//添加数据
 			formData.append("jsonData",self.defaultSettings.data);
-			
 			var xhr = new XMLHttpRequest();
 			//设置超时时间:单位:毫秒(ms)
 			xhr.timeout = self.defaultSettings.timeOut;
@@ -266,7 +245,6 @@
 			xhr.setRequestHeader("Content-Type", "multipart/form-data");
 		    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 		    xhr.setRequestHeader("Cache-Control", "no-cache");
-		    
 		    //设置请求头
 	    	for(var i in self.defaultSettings.header){
 		    	xhr.setRequestHeader(i,self.defaultSettings.header[i]);
@@ -276,25 +254,21 @@
 		    xhr.onload = function(e){
 				if(xhr.readyState==4){
 					var res = this.response;
-					if(this.status==200 && res.code==200){
-						DialogHelper.Loading(false);
+                    DialogHelper.Loading(false);
+                    if(this.status==200 && res.code==200){
 						self.defaultSettings.callback(this.status,this.response);
-					}else if(this.status==404 || res.code==404){
-						window.location.href = "/templates/common/404.html";
-					}else if(this.status==500 || res.code==500){
-						window.location.href = "/templates/common/500.html";
-					}else{
-						window.location.href = "/templates/common/unKnownError.html";
-					}
+					}else {
+                        DialogHelper.Fail(res.msg);
+                    }
 				}	
 			};
 			//注册超时回调函数
 			xhr.ontimeout = function(e){
-				window.location.replace("/templates/common/timeout.html");
-			};
+                DialogHelper.Fail("请求超时，请重试！");
+            };
 			//注册异常回调函数
 			xhr.onerror = function(e){
-				window.location.replace("/templates/common/500.html");
+                DialogHelper.Fail("服务器异常，请重试！");
 			};
 			
 			//获取请求进度回调函数:上传文件时适用

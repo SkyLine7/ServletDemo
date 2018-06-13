@@ -50,4 +50,32 @@ public class Demo2Servlet {
 	public String toVuePage4(HttpServletRequest req,HttpServletResponse resp) {
 		return "/vue/vue4";
 	}
+
+
+	/**
+	 * 招标计划页面
+	 * @author pcongda
+	 */
+	@MyRequsetMapping("/tenderplan")
+	public String totenderplan(HttpServletRequest req,HttpServletResponse resp) {
+		return "/sstenderplatform/tenderPlan";
+	}
+
+	/**
+	 * 招标公告页面
+	 * @author pcongda
+	 */
+	@MyRequsetMapping("/tenderNotice.html")
+	public String totenderNotice(HttpServletRequest req,HttpServletResponse resp) {
+		return "/sstenderplatform/tenderNotice";
+	}
+
+	/**
+	 * 招标文件页面
+	 * @author pcongda
+	 */
+	@MyRequsetMapping("/tenderFile.html")
+	public String totenderFile(HttpServletRequest req,HttpServletResponse resp) {
+		return "/sstenderplatform/tenderFile";
+	}
 }

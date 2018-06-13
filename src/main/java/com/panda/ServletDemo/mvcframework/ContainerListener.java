@@ -74,7 +74,7 @@ public class ContainerListener implements ServletContextListener{
 		//通过default servlet 映射静态资源
 		ServletRegistration regist = sc.getServletRegistration("default");
 		regist.addMapping("/resources/static/*");
-		regist.addMapping("/templates/*");
+		//regist.addMapping("/templates/*");
 		regist.addMapping("/favicon.ico");
 		//regist.addMapping("/WEB-INF/resources/*");
 	}
@@ -316,7 +316,7 @@ public class ContainerListener implements ServletContextListener{
          ServletContextTemplateResolver resolver = new ServletContextTemplateResolver(servletContext);
          resolver.setCharacterEncoding("UTF-8");
          resolver.setTemplateMode("HTML");
-         resolver.setPrefix("/templates/");
+         resolver.setPrefix("/templates/"); //配置thymeleaf 解析基础包路径
          resolver.setSuffix(".html");
          resolver.setCacheable(false); //禁用缓存
          return resolver;

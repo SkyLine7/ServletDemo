@@ -1,5 +1,10 @@
 package com.panda.ServletDemo.mvcframework;
 
+import com.panda.ServletDemo.mvcframework.annotation.MyPathVariable;
+import com.panda.ServletDemo.mvcframework.annotation.MyRequestParam;
+import com.panda.ServletDemo.mvcframework.bean.MethodParam;
+import com.panda.ServletDemo.mvcframework.enums.MyRequestMethod;
+
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -9,10 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
-
-import com.panda.ServletDemo.mvcframework.annotation.MyPathVariable;
-import com.panda.ServletDemo.mvcframework.annotation.MyRequestParam;
-import com.panda.ServletDemo.mvcframework.bean.MethodParam;
 
 /**
  * Action方法相关信息
@@ -29,7 +30,8 @@ public class Handler implements Serializable{
 	private Map<MethodParam,Integer> param = new LinkedHashMap<>(); //保存方法参数顺序
 	private List<String> pathParamList = new LinkedList<>(); //路径上的参数名称
 	private int typeRange; //请求方法是否在Action定义内： 0：在，1：不在
-	
+	private MyRequestMethod[] reqMethodTypes; // 限定请求方法类型
+
 	public Handler(Class<?> clazz, Method method,int typeRange,List<String> pathParamList) {
 		this.clazz = clazz;
 		this.method = method;
@@ -91,6 +93,14 @@ public class Handler implements Serializable{
 
 	public void setPathParamList(List<String> pathParamList) {
 		this.pathParamList = pathParamList;
+	}
+
+	public MyRequestMethod[] getReqMethodTypes() {
+		return reqMethodTypes;
+	}
+
+	public void setReqMethodTypes(MyRequestMethod[] reqMethodTypes) {
+		this.reqMethodTypes = reqMethodTypes;
 	}
 
 	/**
