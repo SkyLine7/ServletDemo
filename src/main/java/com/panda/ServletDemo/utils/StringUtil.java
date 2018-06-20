@@ -51,4 +51,16 @@ public class StringUtil {
 		}
 		return value;
 	}
+
+	/**
+	 * 判断类型是否是String
+	 * @param type
+	 * @return
+	 */
+	public static boolean numType(Class<?> type) {
+		if(type == String.class){
+			return true;
+		}
+		return false;
+	}
 }

@@ -1,12 +1,6 @@
 package com.panda.ServletDemo.about.conllection;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * list集合
@@ -25,6 +19,25 @@ public class ListDemo {
 			int num = (Integer) it.next();
 			System.out.println(num);
 		}
+		
+		//Runnable
  	}
+	
+	//匿名内部类
+	public void test1(){
+		Comparator<Integer> com = new Comparator<Integer>() {
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				return Integer.compare(o1, o2);
+			}
+		};
+		TreeSet<Integer> set = new TreeSet<>(com);
+	}
+	
+	//lambda表达式
+	public void test2(){
+		Comparator<Integer> com = (x,y) -> Integer.compare(x, y);
+		TreeSet<Integer> set = new TreeSet<>(com);
 
+	}
 }

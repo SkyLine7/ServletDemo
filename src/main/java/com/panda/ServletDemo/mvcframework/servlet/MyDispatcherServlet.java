@@ -4,6 +4,7 @@ import com.panda.ServletDemo.mvcframework.Handler;
 import com.panda.ServletDemo.mvcframework.HandlerExceptionResolver;
 import com.panda.ServletDemo.mvcframework.HandlerInvoker;
 import com.panda.ServletDemo.mvcframework.HandlerMapping;
+import com.panda.ServletDemo.mvcframework.exception.RequsetException;
 import com.panda.ServletDemo.mvcframework.util.InstanceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,7 @@ import java.io.IOException;
  * @author pcongda
  *
  */
-@WebServlet(urlPatterns="/*",loadOnStartup= 0,initParams={@WebInitParam(name="contextConfigLocation",value="application.properties")}) //Tomcat容器启动时加载
+@WebServlet(name = "myDispatcher",urlPatterns="/*",loadOnStartup= 0,initParams={@WebInitParam(name="contextConfigLocation",value="application.properties")}) //Tomcat容器启动时加载
 public class MyDispatcherServlet extends HttpServlet{
 	private static final long serialVersionUID = 1459365600624171271L;
 

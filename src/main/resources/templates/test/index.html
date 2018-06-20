@@ -12,6 +12,9 @@
 	<body>
 		<div data-layout-fragment="page-container">
 			<a th:href="@{/demo1/queryList2?name=panda}">返回页面</a>
+			<a th:href="@{/output/downloadToXLS.html}">下载xls文件(旧)</a>
+			<a th:href="@{/outputXLS/downloadToXLS.html}">下载xls文件(新)</a>
+			<a th:href="@{/outputXLS/downloadToXLSX.html}">下载xlsx文件</a>
 			<input type="text" th:value="${application.cxtPath}" />
 			<a th:href="@{/demo2/queryList2?name=panda}">该页面不存在</a>
 			<a href="javascript:void(0);" onclick="sendAjax1();">发送AJAX请求(原生js DomString GET)</a>

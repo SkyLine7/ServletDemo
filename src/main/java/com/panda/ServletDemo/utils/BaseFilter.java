@@ -3,21 +3,15 @@
  */
 package com.panda.ServletDemo.utils;
 
-import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.IOException;
 
 /**
  * 全局编码设置，页面缓存设置,跨域设置
@@ -67,8 +61,8 @@ public class BaseFilter implements Filter{
   		if(resp.getStatus()==204){
   			resp.setStatus(200);
   		}    
-  		
-  		GetRequestWrapper myRequest = new GetRequestWrapper(req); 
+
+  		GetRequestWrapper myRequest = new GetRequestWrapper(req);
  		//传递被增强后的request
         chain.doFilter(myRequest, resp);   
 	}

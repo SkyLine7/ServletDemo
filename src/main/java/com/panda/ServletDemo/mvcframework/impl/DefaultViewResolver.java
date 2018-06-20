@@ -1,21 +1,19 @@
 package com.panda.ServletDemo.mvcframework.impl;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-
 import com.alibaba.fastjson.JSONObject;
 import com.panda.ServletDemo.mvcframework.ContainerListener;
 import com.panda.ServletDemo.mvcframework.ViewResolver;
 import com.panda.ServletDemo.mvcframework.bean.ResultResponse;
 import com.panda.ServletDemo.mvcframework.exception.RequsetException;
 import com.panda.ServletDemo.mvcframework.exception.ServiceException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * 默认的视图解析器
@@ -28,7 +26,11 @@ public class DefaultViewResolver implements ViewResolver{
 
 	@Override
 	public void resolverView(HttpServletRequest request, HttpServletResponse response, Object result) {
-		//方法返回值可为字符串(页面) 和  ResultResponse 
+
+		//没有返回值，说明响应的不是json或者页面,流或其他
+		if (result == null) return ;
+
+		// 页面
 		if(result instanceof java.lang.String) {
 			String str = result.toString();
 			int index = str.indexOf(":");
@@ -54,7 +56,7 @@ public class DefaultViewResolver implements ViewResolver{
 					}
 				}
 			}
-		}else{  
+		}else{  // json
 			response.setContentType("application/json;charset=utf-8");
 			try {
 				if(result instanceof ResultResponse){//返回json数据

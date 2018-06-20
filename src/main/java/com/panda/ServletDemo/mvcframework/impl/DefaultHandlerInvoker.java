@@ -78,7 +78,6 @@ public class DefaultHandlerInvoker implements HandlerInvoker{
 			}
 		}
         
-        
         //判断是普通字段上传还是文件上传
         if(ServletFileUpload.isMultipartContent(request)) {
         	//multipart类型,先不管
@@ -95,17 +94,6 @@ public class DefaultHandlerInvoker implements HandlerInvoker{
 	    			paramValue[entry.getValue()] = (convert(clazz,value));
     			}
     		}
-    		/*for(Map.Entry<String, Object> obj:reqParamMap.entrySet()) {
-    			String value = obj.getValue().toString();
-    			//方法定义的参数没有请求中的参数，跳过
-    			for (MethodParam entry : paramMap.keySet()) {
-	    			if(!entry.getName().equals(obj.getKey())) {
-	    				continue;
-	    			}
-	    			Class<?> clazz = entry.getClazz();
-	    			paramValue[paramMap.get(entry)] = (convert(clazz,value));
-    			}
-    		}*/
         }
 		return paramValue;
 	}
@@ -236,7 +224,7 @@ public class DefaultHandlerInvoker implements HandlerInvoker{
     }
 
 	private void checkHanderStatus(Handler handler,HttpServletRequest request) {
-		//未找到方法 跳转到 404 页面
+		//未找到方法 抛出异常
 		if (handler == null) {
 			logger.error(String.format("调用：%s请求方法不存在",request.getRequestURI()));
 			throw new RequsetException("请求不存在");
