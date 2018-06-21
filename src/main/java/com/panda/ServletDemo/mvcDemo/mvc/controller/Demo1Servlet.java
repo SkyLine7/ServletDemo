@@ -4,12 +4,15 @@ import com.alibaba.fastjson.JSON;
 import com.panda.ServletDemo.entity.User;
 import com.panda.ServletDemo.mvcDemo.mvc.service.Demo1Service;
 import com.panda.ServletDemo.mvcframework.annotation.*;
+import com.panda.ServletDemo.mvcframework.bean.FreemarkerResponse;
 import com.panda.ServletDemo.mvcframework.bean.ResultResponse;
 import com.panda.ServletDemo.mvcframework.enums.MyRequestMethod;
 import com.panda.ServletDemo.utils.ResultResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 @MyController
 @MyRequsetMapping(value="/demo1")
@@ -86,5 +89,19 @@ public class Demo1Servlet {
 	@MyRequsetMapping(value="/500.html")
 	public String to500Page(HttpServletRequest req,HttpServletResponse resp) {
 		return "/common/500";
+	}
+
+	/**
+	 * freemarker 测试
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
+	@MyRequsetMapping(value="/test/freemarker")
+	public FreemarkerResponse toFreemarkerA(HttpServletRequest req, HttpServletResponse resp) {
+		Map<String, Object> data = new HashMap<>();
+		req.setAttribute("user","Big Joe");
+		data.put("user", "Big Joe");
+		return ResultResponseUtil.getFreemarkerResult("/a",data);
 	}
 }

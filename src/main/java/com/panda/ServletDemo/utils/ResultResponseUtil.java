@@ -1,6 +1,9 @@
 package com.panda.ServletDemo.utils;
 
+import com.panda.ServletDemo.mvcframework.bean.FreemarkerResponse;
 import com.panda.ServletDemo.mvcframework.bean.ResultResponse;
+
+import java.util.Map;
 
 /**
  * 统一响应工具类
@@ -9,7 +12,7 @@ import com.panda.ServletDemo.mvcframework.bean.ResultResponse;
  */
 public class ResultResponseUtil {
 	
-	//响应格式
+	//json响应格式
 	private static ResultResponse getResultResponse(Integer code, String msg, Object obj){
 		ResultResponse result = new ResultResponse();
 		result.setCode(code);
@@ -46,5 +49,10 @@ public class ResultResponseUtil {
 	//响应失败:500
 	public static ResultResponse serverError(String msg){
 		return getResultResponse(500,msg,null);
+	}
+
+	//响应freemarker 对象
+	public static FreemarkerResponse getFreemarkerResult(String url,Map<String,Object> dataMap){
+		return new FreemarkerResponse(url,dataMap);
 	}
 }

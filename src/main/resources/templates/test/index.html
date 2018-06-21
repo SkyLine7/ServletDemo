@@ -11,7 +11,10 @@
 	</head>
 	<body>
 		<div data-layout-fragment="page-container">
-			<a th:href="@{/demo1/queryList2?name=panda}">返回页面</a>
+			<button type="button" class="btn btn-info btn-sm btn-round act">按钮1</button>
+			<button type="button" class="btn btn-info btn-sm btn-round act">按钮2</button>
+			<a th:href="@{/demo1/queryList2?name=panda}">返回thymeleaf解析页面</a>
+			<a th:href="@{/demo1/test/freemarker}">返回freemarker解析页面</a>
 			<a th:href="@{/output/downloadToXLS.html}">下载xls文件(旧)</a>
 			<a th:href="@{/outputXLS/downloadToXLS.html}">下载xls文件(新)</a>
 			<a th:href="@{/outputXLS/downloadToXLSX.html}">下载xlsx文件</a>

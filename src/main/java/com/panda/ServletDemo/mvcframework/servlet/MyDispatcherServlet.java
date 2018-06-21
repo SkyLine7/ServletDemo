@@ -4,7 +4,6 @@ import com.panda.ServletDemo.mvcframework.Handler;
 import com.panda.ServletDemo.mvcframework.HandlerExceptionResolver;
 import com.panda.ServletDemo.mvcframework.HandlerInvoker;
 import com.panda.ServletDemo.mvcframework.HandlerMapping;
-import com.panda.ServletDemo.mvcframework.exception.RequsetException;
 import com.panda.ServletDemo.mvcframework.util.InstanceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

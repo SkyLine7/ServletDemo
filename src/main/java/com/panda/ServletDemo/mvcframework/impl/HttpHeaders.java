@@ -7,6 +7,8 @@ import java.util.*;
 
 public class HttpHeaders implements MultiValueMap<String,String>,Serializable{
 
+	private static final long serialVersionUID = 283676833158247346L;
+
 	private final Map<String, List<String>> headers = null;
 
 	@Override

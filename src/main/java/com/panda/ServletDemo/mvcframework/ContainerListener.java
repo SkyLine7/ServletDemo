@@ -7,6 +7,9 @@ import com.panda.ServletDemo.mvcframework.annotation.MyService;
 import com.panda.ServletDemo.mvcframework.bean.Requestor;
 import com.panda.ServletDemo.mvcframework.enums.MyRequestMethod;
 import com.panda.ServletDemo.utils.StringUtil;
+import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapper;
+import freemarker.template.TemplateExceptionHandler;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -40,7 +43,7 @@ import java.util.regex.Pattern;
  */
 @WebListener("AppListener")
 public class ContainerListener implements ServletContextListener{
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(ContainerListener.class);
 	
 	//默认配置文件名称
@@ -68,6 +71,8 @@ public class ContainerListener implements ServletContextListener{
 		initMvcFramework();
 	    //添加Servlet静态资源映射
 	    addServletMapping(servletContext);
+	    // 注册freemarkerServlet
+		//RegisterFreemarker(servletContext);
 	}
 	
 	private void addServletMapping(ServletContext sc){
@@ -303,7 +308,7 @@ public class ContainerListener implements ServletContextListener{
         return actionMap;
     }
 	
-	//获取模版
+	//获取thymeleaf模版
  	public static TemplateEngine templateEngine(ServletContext servletContext) {
         TemplateEngine engine = new TemplateEngine();
 	    engine.addDialect(new LayoutDialect());
@@ -311,7 +316,7 @@ public class ContainerListener implements ServletContextListener{
         return engine;
     }
 	
- 	//模版配置信息
+ 	//thymeleaf模版配置信息
  	private static ITemplateResolver templateResolver(ServletContext servletContext) {
          ServletContextTemplateResolver resolver = new ServletContextTemplateResolver(servletContext);
          resolver.setCharacterEncoding("UTF-8");
@@ -327,4 +332,38 @@ public class ContainerListener implements ServletContextListener{
 		sce = null;
 	}
 
+	/**
+	 * freemarker 配置
+	 * @param sc
+	 */
+	public static Configuration addFreemarkerConfig(ServletContext sc){
+		Configuration config = new Configuration(Configuration.VERSION_2_3_23); // 设置版本
+		config.setServletContextForTemplateLoading(sc,"/templates/ftl/"); // 基本解析路径
+		config.setLocale(Locale.CHINA); //时区
+		config.setEncoding(Locale.CHINA, "UTF-8"); //编码
+		config.setDefaultEncoding("UTF-8");
+		config.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+		config.setClassicCompatible(true);
+		config.setTemplateUpdateDelayMilliseconds(0);
+		// 指定模板如何查看数据模型
+		config.setObjectWrapper(new DefaultObjectWrapper());
+		return config;
+	}
+
+	/**
+	 * 注册 及 配置 freemarkerServlet
+	 * @param sc
+	 */
+	private void RegisterFreemarker(ServletContext sc){
+		//注册freemarkerServlet
+		ServletRegistration freemarker = sc.addServlet("freemarker","freemarker.ext.servlet.FreemarkerServlet");
+		// 基本解析路径
+		freemarker.setInitParameter("TemplatePath","/templates/ftl/");
+		freemarker.setInitParameter("NoCache","true");
+		freemarker.setInitParameter("ContentType","text/html;charset=UTF-8");
+		freemarker.setInitParameter("template_update_delay", "0");
+		freemarker.setInitParameter("default_encoding", "UTF-8");
+		freemarker.setInitParameter("number_format", "0.##########");
+		freemarker.setInitParameter("freemarker", "*.ftl");
+	}
 }

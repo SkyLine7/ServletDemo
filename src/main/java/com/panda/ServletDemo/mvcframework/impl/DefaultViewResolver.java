@@ -3,9 +3,12 @@ package com.panda.ServletDemo.mvcframework.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.panda.ServletDemo.mvcframework.ContainerListener;
 import com.panda.ServletDemo.mvcframework.ViewResolver;
+import com.panda.ServletDemo.mvcframework.bean.FreemarkerResponse;
 import com.panda.ServletDemo.mvcframework.bean.ResultResponse;
 import com.panda.ServletDemo.mvcframework.exception.RequsetException;
 import com.panda.ServletDemo.mvcframework.exception.ServiceException;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
@@ -14,7 +17,6 @@ import org.thymeleaf.context.WebContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 /**
  * 默认的视图解析器
  * @author pcongda
@@ -26,8 +28,7 @@ public class DefaultViewResolver implements ViewResolver{
 
 	@Override
 	public void resolverView(HttpServletRequest request, HttpServletResponse response, Object result) {
-
-		//没有返回值，说明响应的不是json或者页面,流或其他
+		//没有返回值，说明响应的不是json或者页面,直接返回
 		if (result == null) return ;
 
 		// 页面
@@ -56,7 +57,20 @@ public class DefaultViewResolver implements ViewResolver{
 					}
 				}
 			}
-		}else{  // json
+		}else if(result instanceof FreemarkerResponse){ //使用freemarker加载模版
+			try {
+				FreemarkerResponse freemarkerObj = (FreemarkerResponse)result;
+				Configuration config = ContainerListener.addFreemarkerConfig(request.getServletContext());
+				// 将模板和数据结合，并返回浏览器
+				Template template = config.getTemplate(freemarkerObj.getUrl()+".ftl","utf-8");
+				template.process(freemarkerObj.getDataMap(), response.getWriter());
+			} catch (Exception e) {
+				e.printStackTrace();
+				logger.error("加载freemarker模版失败，原因是:{}",e.getMessage());
+				throw new RequsetException("加载freemarker模版失败", e);
+			}
+
+		} else{  // 返回json
 			response.setContentType("application/json;charset=utf-8");
 			try {
 				if(result instanceof ResultResponse){//返回json数据

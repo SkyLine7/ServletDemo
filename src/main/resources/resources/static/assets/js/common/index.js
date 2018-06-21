@@ -150,4 +150,33 @@ function sendAjax3(){
 	}); 
 }
 
-		
+
+//获取dom元素
+let domList = document.querySelectorAll(".act");
+//绑定事件监听
+for (let i=0;i<domList.length;i++){
+	domList[i].addEventListener("click",reset,false);
+}
+function reset() {
+	//5秒内不能第二次提交
+	let _self = this;
+	let btnText = this.innerHTML;
+    let count = 5;
+    let timer = window.setInterval(function () {
+		if(count > 0){
+            _self.classList.remove("btn-info");
+            _self.classList.add("btn-default");
+            _self.setAttribute("disabled",true);
+            _self.innerHTML = ''+count+'秒后启用';
+            count--;
+        }else if(count == 0){
+            _self.removeAttribute("disabled");
+            _self.classList.remove("btn-default");
+            _self.classList.add("btn-info");
+            _self.innerHTML = btnText;
+            count--;
+		}else{
+            window.clearInterval(timer);
+		}
+    },1000);
+}
