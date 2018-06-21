@@ -337,8 +337,21 @@ public class ContainerListener implements ServletContextListener{
 	 * @param sc
 	 */
 	public static Configuration addFreemarkerConfig(ServletContext sc){
+
+		// 1.基于类路径下加载 模版目录
+//		String path = ContainerListener.class.getResource("/").getPath();
+//		path = path.substring(1, path.indexOf("classes"));
+//		System.out.println(path);
+//		File ftlPathDir = new File(path+File.separator+"ftl");
+//		System.out.println(ftlPathDir.getPath());
+//		System.out.println(ftlPathDir.getName());
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+
 		Configuration config = new Configuration(Configuration.VERSION_2_3_23); // 设置版本
-		config.setServletContextForTemplateLoading(sc,"/templates/ftl/"); // 基本解析路径
+		// 2.基于ServletContext 上下文 加载模版目录
+		config.setServletContextForTemplateLoading(sc,"/templates/ftl/");
 		config.setLocale(Locale.CHINA); //时区
 		config.setEncoding(Locale.CHINA, "UTF-8"); //编码
 		config.setDefaultEncoding("UTF-8");
@@ -347,6 +360,15 @@ public class ContainerListener implements ServletContextListener{
 		config.setTemplateUpdateDelayMilliseconds(0);
 		// 指定模板如何查看数据模型
 		config.setObjectWrapper(new DefaultObjectWrapper());
+
+	///////////////////////////////////////////////////////////////
+
+//		try {
+//			// 1.基于类路径下加载 模版目录
+//			config.setDirectoryForTemplateLoading(ftlPathDir);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		return config;
 	}
 
