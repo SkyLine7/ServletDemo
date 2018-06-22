@@ -6,10 +6,11 @@ import com.panda.ServletDemo.mvcframework.annotation.MyRequsetMapping;
 import com.panda.ServletDemo.mvcframework.annotation.MyService;
 import com.panda.ServletDemo.mvcframework.bean.Requestor;
 import com.panda.ServletDemo.mvcframework.enums.MyRequestMethod;
-import com.panda.ServletDemo.utils.StringUtil;
+import com.panda.ServletDemo.util.StringUtil;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.TemplateExceptionHandler;
+import freemarker.template.Version;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -47,7 +48,7 @@ public class ContainerListener implements ServletContextListener{
 	private static final Logger logger = LoggerFactory.getLogger(ContainerListener.class);
 	
 	//默认配置文件名称
-	private static final String settingName = "application.properties";
+	private static final String SETTING_NAME = "application.properties";
 	
 	private Properties prop = new Properties();
 	
@@ -86,7 +87,7 @@ public class ContainerListener implements ServletContextListener{
 	
 	private void initMvcFramework() {
 		//1.容器启动时，读取application.properties
-		doLoadConfig(settingName);
+		doLoadConfig(SETTING_NAME);
 		
 		//2.扫描带有注解的类
 		doScanner(prop.getProperty("scanBasePackge"));
@@ -321,9 +322,11 @@ public class ContainerListener implements ServletContextListener{
          ServletContextTemplateResolver resolver = new ServletContextTemplateResolver(servletContext);
          resolver.setCharacterEncoding("UTF-8");
          resolver.setTemplateMode("HTML");
-         resolver.setPrefix("/templates/"); //配置thymeleaf 解析基础包路径
+	     //配置thymeleaf 解析基础包路径
+         resolver.setPrefix("/templates/");
          resolver.setSuffix(".html");
-         resolver.setCacheable(false); //禁用缓存
+	     //禁用缓存
+         resolver.setCacheable(false);
          return resolver;
     }
  	
@@ -348,18 +351,20 @@ public class ContainerListener implements ServletContextListener{
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-
-		Configuration config = new Configuration(Configuration.VERSION_2_3_23); // 设置版本
+		//设置版本
+		Configuration config = new Configuration(Configuration.VERSION_2_3_23);
 		// 2.基于ServletContext 上下文 加载模版目录
 		config.setServletContextForTemplateLoading(sc,"/templates/ftl/");
-		config.setLocale(Locale.CHINA); //时区
-		config.setEncoding(Locale.CHINA, "UTF-8"); //编码
+		//时区
+		config.setLocale(Locale.CHINA);
+		//编码
+		config.setEncoding(Locale.CHINA, "UTF-8");
 		config.setDefaultEncoding("UTF-8");
 		config.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 		config.setClassicCompatible(true);
 		config.setTemplateUpdateDelayMilliseconds(0);
 		// 指定模板如何查看数据模型
-		config.setObjectWrapper(new DefaultObjectWrapper());
+		config.setObjectWrapper(new DefaultObjectWrapper(new Version("2.3.23")));
 
 	///////////////////////////////////////////////////////////////
 
@@ -376,7 +381,7 @@ public class ContainerListener implements ServletContextListener{
 	 * 注册 及 配置 freemarkerServlet
 	 * @param sc
 	 */
-	private void RegisterFreemarker(ServletContext sc){
+	private void registerFreemarker(ServletContext sc){
 		//注册freemarkerServlet
 		ServletRegistration freemarker = sc.addServlet("freemarker","freemarker.ext.servlet.FreemarkerServlet");
 		// 基本解析路径

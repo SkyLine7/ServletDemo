@@ -1,5 +1,8 @@
 package com.panda.ServletDemo.mvcframework.bean;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import java.io.Serializable;
 
 /**
@@ -35,5 +38,16 @@ public class MethodParam implements Serializable{
 	public void setClazz(Class<?> clazz) {
 		this.clazz = clazz;
 	}
-	
+
+
+	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		return EqualsBuilder.reflectionEquals(this, obj);
+	}
 }

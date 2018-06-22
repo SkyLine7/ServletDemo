@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.panda.ServletDemo.entity.Student;
 import com.panda.ServletDemo.mvcframework.annotation.MyController;
 import com.panda.ServletDemo.mvcframework.annotation.MyRequsetMapping;
-import com.panda.ServletDemo.utils.SXSSFWorkbookUtil;
+import com.panda.ServletDemo.util.SXSSFWorkbookUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

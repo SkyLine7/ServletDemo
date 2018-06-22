@@ -14,5 +14,5 @@ public interface HandlerExceptionResolver {
 	 * 解析异常
 	 * @author pcongda
 	 */
-	public void ResolverException(HttpServletRequest request, HttpServletResponse response, Exception e);
+	public void resolverException(HttpServletRequest request, HttpServletResponse response, Exception e);
 }

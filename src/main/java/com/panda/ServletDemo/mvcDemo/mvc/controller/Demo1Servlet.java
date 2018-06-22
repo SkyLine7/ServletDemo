@@ -7,11 +7,13 @@ import com.panda.ServletDemo.mvcframework.annotation.*;
 import com.panda.ServletDemo.mvcframework.bean.FreemarkerResponse;
 import com.panda.ServletDemo.mvcframework.bean.ResultResponse;
 import com.panda.ServletDemo.mvcframework.enums.MyRequestMethod;
-import com.panda.ServletDemo.utils.ResultResponseUtil;
+import com.panda.ServletDemo.util.ResultResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @MyController
@@ -92,7 +94,7 @@ public class Demo1Servlet {
 	}
 
 	/**
-	 * freemarker 测试
+	 * freemarker 测试1
 	 * @param req
 	 * @param resp
 	 * @return
@@ -100,8 +102,30 @@ public class Demo1Servlet {
 	@MyRequsetMapping(value="/test/freemarker")
 	public FreemarkerResponse toFreemarkerA(HttpServletRequest req, HttpServletResponse resp) {
 		Map<String, Object> data = new HashMap<>();
-		req.setAttribute("user","Big Joe");
 		data.put("user", "Big Joe");
+		List<String> persons = new ArrayList<>(100);
+		persons.add("阿灵罗");
+		persons.add("罗零");
+		persons.add("灵罗");
+		data.put("person",persons);
 		return ResultResponseUtil.getFreemarkerResult("/a",data);
 	}
+
+	/**
+	 * freemarker 测试2
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
+	@MyRequsetMapping(value="/test/freemarker2")
+	public FreemarkerResponse toFreemarkerB(HttpServletRequest req, HttpServletResponse resp) {
+		Map<String, Object> data = new HashMap<>();
+		//遍历Map
+		Map<String,String> mx = new HashMap<>();
+		mx.put("alingluo", "阿灵罗");
+		mx.put("lling", "罗零");
+		data.put("mx", mx);
+		return ResultResponseUtil.getFreemarkerResult("/b",data);
+	}
+
 }

@@ -68,7 +68,7 @@ public class MyDispatcherServlet extends HttpServlet{
 			handlerInvoker.invokerhandler(req, resp, handler);
 		} catch (Exception e) {
 			//解析视图异常
-			handlerExceptionResolver.ResolverException(req, resp, e);
+			handlerExceptionResolver.resolverException(req, resp, e);
 		}
 	}
 	

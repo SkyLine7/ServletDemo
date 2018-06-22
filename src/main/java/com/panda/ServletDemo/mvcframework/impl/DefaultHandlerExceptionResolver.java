@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.panda.ServletDemo.mvcframework.HandlerExceptionResolver;
 import com.panda.ServletDemo.mvcframework.exception.RequsetException;
 import com.panda.ServletDemo.mvcframework.exception.ServiceException;
-import com.panda.ServletDemo.utils.ResultResponseUtil;
+import com.panda.ServletDemo.util.ResultResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +22,7 @@ public class DefaultHandlerExceptionResolver implements HandlerExceptionResolver
 	private static final Logger logger = LoggerFactory.getLogger(DefaultHandlerExceptionResolver.class);
 	
 	@Override
-	public void ResolverException(HttpServletRequest request, HttpServletResponse response, Exception e){
+	public void resolverException(HttpServletRequest request, HttpServletResponse response, Exception e){
         //请求异常
         if(e instanceof RequsetException){
             response.setStatus(400);

@@ -11,10 +11,32 @@
 	</head>
 	<body>
 		<div data-layout-fragment="page-container">
+			<div id="container">
+				<div id="list" style="left: -600px;">
+					<img src="img/5.jpg" alt="1" />
+					<img src="img/1.jpg" alt="1" />
+					<img src="img/2.jpg" alt="2" />
+					<img src="img/3.jpg" alt="3" />
+					<img src="img/4.jpg" alt="4" />
+					<img src="img/5.jpg" alt="5" />
+					<img src="img/1.jpg" alt="5" />
+				</div>
+				<div id="buttons">
+					<span index="1" class="on"></span>
+					<span index="2"></span>
+					<span index="3"></span>
+					<span index="4"></span>
+					<span index="5"></span>
+				</div>
+				<a href="javascript:;" id="prev" class="arrow">&lt;</a>
+				<a href="javascript:;" id="next" class="arrow">&gt;</a>
+			</div>
+
 			<button type="button" class="btn btn-info btn-sm btn-round act">按钮1</button>
 			<button type="button" class="btn btn-info btn-sm btn-round act">按钮2</button>
 			<a th:href="@{/demo1/queryList2?name=panda}">返回thymeleaf解析页面</a>
-			<a th:href="@{/demo1/test/freemarker}">返回freemarker解析页面</a>
+			<a th:href="@{/demo1/test/freemarker}">返回freemarker解析页面1</a>
+			<a th:href="@{/demo1/test/freemarker2}">返回freemarker解析页面2</a>
 			<a th:href="@{/output/downloadToXLS.html}">下载xls文件(旧)</a>
 			<a th:href="@{/outputXLS/downloadToXLS.html}">下载xls文件(新)</a>
 			<a th:href="@{/outputXLS/downloadToXLSX.html}">下载xlsx文件</a>

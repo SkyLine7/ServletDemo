@@ -2,7 +2,7 @@ package com.panda.ServletDemo.mvcDemo.mvc.controller;
 
 import com.panda.ServletDemo.mvcframework.annotation.MyController;
 import com.panda.ServletDemo.mvcframework.annotation.MyRequsetMapping;
-import com.panda.ServletDemo.utils.HSSFWorkbookUtils;
+import com.panda.ServletDemo.util.HSSFWorkbookUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +47,7 @@ public class outputXLS {
 		}
 
 		//导出为xls格式
-		try (HSSFWorkbook workbook = HSSFWorkbookUtils.getHssFWorkbook(sheetName, title, values)) {
+		try (HSSFWorkbook workbook = HSSFWorkbookUtil.getHssFWorkbook(sheetName, title, values)) {
 			response.setContentType("application/msexcel;charset=utf-8");
 			response.addHeader("Content-Disposition", "attachment;filename="+processFileName(request,fileName));
 			//设置缓冲区

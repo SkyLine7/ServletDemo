@@ -1,8 +1,10 @@
 package com.panda.ServletDemo.mvcframework.bean;
 
-import java.io.Serializable;
-
 import com.panda.ServletDemo.mvcframework.enums.MyRequestMethod;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import java.io.Serializable;
 
 /**
  * 封装http请求
@@ -42,4 +44,16 @@ public class Requestor implements Serializable {
 		this.requsetMethod = requsetMethod;
 	}
 
+
+	@Override
+	public int hashCode() {
+		//return super.hashCode();
+		return HashCodeBuilder.reflectionHashCode(this);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		//return super.equals(obj);
+		return EqualsBuilder.reflectionEquals(this, obj);
+	}
 }
