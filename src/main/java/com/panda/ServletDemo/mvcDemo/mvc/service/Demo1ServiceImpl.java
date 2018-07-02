@@ -1,4 +1,4 @@
-package com.panda.ServletDemo.mvcDemo.mvc.service;
+package com.panda.ServletDemo.mvcdemo.mvc.service;
 
 import com.panda.ServletDemo.mvcframework.annotation.MyService;
 

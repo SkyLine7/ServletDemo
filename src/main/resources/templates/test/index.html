@@ -5,9 +5,7 @@
 	  layout:decorate="/common/layout"
 	  lang="en">
 	<head>
-		<css data-layout-fragment="extendcss">
-			<title>测试页面</title>
-		</css>
+		<title data-layout-fragment="t">测试页面</title>
 	</head>
 	<body>
 		<div data-layout-fragment="page-container">
@@ -26,10 +24,18 @@
 			<a href="javascript:void(0);" onclick="javascript:alert('还在写');">发送AJAX请求(原生js FormData GET/POST)</a>
 			<a href="javascript:void(0);" onclick="sendAjax3();">发送AJAX请求(Jquery DomString)</a>
 			<a href="javascript:void(0);" onclick="javascript:alert('还在写');">发送AJAX请求(Jquery FormData)</a>
+
+			<div id="drop">Drop an XLSX / XLSM / XLSB / ODS / XLS / XML file here to see sheet data</div>
+			<p><input type="file" name="xlfile" id="xlf" /> ... or click here to select a file</p>
+			<input type="hidden" id="hiddata" />
 		</div>
 		<extendscript data-layout-fragment="extendscript">
 			<script th:src="@{/resources/static/assets/js/common/index.js}"></script>
 			<script th:src="@{/resources/static/assets/js/common/AjaxTest.js}"></script>
+			<!-- add the shim first -->
+			<script th:src="@{/resources/static/assets/js/plugins/js-xlsx/shim.min.js}"></script>
+			<!-- after the shim is referenced, add the library -->
+			<script th:src="@{/resources/static/assets/js/plugins/js-xlsx/xlsx.full.min.js}"></script>
 		</extendscript>
 	</body>
 </html>

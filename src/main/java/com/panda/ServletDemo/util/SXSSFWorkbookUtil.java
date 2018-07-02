@@ -2,7 +2,7 @@ package com.panda.ServletDemo.util;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.panda.ServletDemo.mvcDemo.mvc.controller.outputXLS;
+import com.panda.ServletDemo.mvcdemo.mvc.controller.outputXLS;
 import org.apache.poi.hpsf.SummaryInformation;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;

@@ -1,4 +1,4 @@
-package com.panda.ServletDemo.mvcDemo.mvc.controller;
+package com.panda.ServletDemo.mvcdemo.mvc.controller;
 
 import com.panda.ServletDemo.mvcframework.annotation.MyController;
 import com.panda.ServletDemo.mvcframework.annotation.MyRequsetMapping;

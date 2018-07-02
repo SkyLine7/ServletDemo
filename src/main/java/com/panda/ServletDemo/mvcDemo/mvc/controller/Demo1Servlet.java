@@ -1,8 +1,8 @@
-package com.panda.ServletDemo.mvcDemo.mvc.controller;
+package com.panda.ServletDemo.mvcdemo.mvc.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.panda.ServletDemo.entity.User;
-import com.panda.ServletDemo.mvcDemo.mvc.service.Demo1Service;
+import com.panda.ServletDemo.mvcdemo.mvc.service.Demo1Service;
 import com.panda.ServletDemo.mvcframework.annotation.*;
 import com.panda.ServletDemo.mvcframework.bean.FreemarkerResponse;
 import com.panda.ServletDemo.mvcframework.bean.ResultResponse;

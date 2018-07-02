@@ -1,62 +1,3 @@
-
-/*function sendAjax1(){
-	//json串
-	var jsonData = {
-		"name": "panda",
-		"age": 18,
-		"hegiht": 183
-	};
-	//创建xhr对象:IE低版本不支持
-	var xhr = new XMLHttpRequest();
-	//设置超时时间:单位:毫秒(ms)
-	xhr.timeout = 1000 * 30 * 60;
-	//设置期望响应返回格式：JSON对象
-	xhr.responseType = "json";
-	//创建异步post请求
-	xhr.open("POST",'/demo1/queryList?rdm=' + Math.random(),true);
-	//设置请求头:
-	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-    xhr.setRequestHeader("Cache-Control", "no-cache");
-	//注册请求加载完成回调函数
-	xhr.onload = function(e){
-		if(xhr.readyState==4){
-			var res = this.response;
-			if(this.status==200 && res.code==200 && res.data != undefined){
-				window.console.log(this.response);
-			}else if(this.status==404 || res.code==404){
-				window.location.href = "/templates/common/404.html";
-			}else if(this.status==500 || res.code==500){
-				window.location.href = "/templates/common/500.html";
-			}
-		}	
-	};
-	//注册超时回调函数
-	xhr.ontimeout = function(e){
-		//跳转超时页面
-		window.location.replace("/templates/common/timeout.html");
-	};
-	//注册异常回调函数
-	xhr.onerror = function(e){
-		//跳转页面
-		window.location.replace("/templates/common/500.html");
-	};
-	//获取请求进度回调函数:上传文件时适用
-	xhr.upload.onprogress = function(e){
-		window.console.log(e.loaded); //当前进度
-		window.console.log(e.total); //总进度
-		var percent = Math.floor(e.loaded/e.total*100); //进度百分比
-		window.console.log(percent);
-	};
-	//发送数据:
-	try{
-		xhr.send("jsonData=" + JSON.stringify(jsonData)+"&dd=" + 2);
-	}catch(e){
-		window.alert("网络不佳，请重试！");
-	};
-}*/
-
-
 function sendAjax1(){
 	var jsonData = {
 		name: "any",
@@ -179,4 +120,66 @@ function reset() {
             window.clearInterval(timer);
 		}
     },1000);
+}
+
+function addLis() {
+    let xlf = document.getElementById('xlf');
+    let drop = document.getElementById('drop');
+    drop.addEventListener("dragenter", handleDragover, false);
+    drop.addEventListener("dragover", handleDragover, false);
+    drop.addEventListener("drop", onDropDown, false);
+
+    if(xlf.addEventListener){
+        xlf.addEventListener('change', handleFile, false);
+    }
+}
+
+addLis();
+
+function handleDragover(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+}
+
+function onDropDown(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    let files = e.dataTransfer.files;
+    let f = files[0];
+    readFile(f);
+}
+
+function handleFile(e) {
+    let files = e.target.files;
+    let f = files[0];
+    readFile(f);
+}
+
+function readFile(file) {
+    let name = file.name;
+    let reader = new FileReader();
+    reader.onload = function (e) {
+        let data = e.target.result;
+        let wb = XLSX.read(data, { type: "binary" });
+        console.log(wb);
+
+		var fromTo = '';
+		var persons = [];
+		// 遍历每张表读取
+		for (var sheet in wb.Sheets) {
+			if (wb.Sheets.hasOwnProperty(sheet)) {
+				fromTo = wb.Sheets[sheet]['!ref'];
+				console.log(fromTo);
+                persons = persons.concat(XLSX.utils.sheet_to_json(wb.Sheets[sheet]));
+				//发现json格式不是你想要的你可以
+				//XLSX.utils.sheet_to_json(wb.Sheets[sheet],{raw:true, header:1})
+				// 如果只取第一张表，就取消注释这行
+				$("#hiddata").val(JSON.stringify(persons));
+				break; // 如果只取第一张表，就取消注释这行
+			}
+		}
+    };
+	// 以二进制方式打开文件
+    reader.readAsBinaryString(file);
 }

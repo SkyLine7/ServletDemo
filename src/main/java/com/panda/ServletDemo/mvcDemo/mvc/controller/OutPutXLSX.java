@@ -1,4 +1,4 @@
-package com.panda.ServletDemo.mvcDemo.mvc.controller;
+package com.panda.ServletDemo.mvcdemo.mvc.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.panda.ServletDemo.entity.Student;
