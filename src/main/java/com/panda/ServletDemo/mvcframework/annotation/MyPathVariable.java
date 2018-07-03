@@ -3,10 +3,11 @@
  */
 package com.panda.ServletDemo.mvcframework.annotation;
 
-/**
- * @author pcongda
- *
- */
+import java.lang.annotation.*;
+
+@Target({ElementType.PARAMETER})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
 public @interface MyPathVariable {
 	
 	String value() default "";

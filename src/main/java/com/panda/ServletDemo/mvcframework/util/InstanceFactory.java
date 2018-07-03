@@ -1,11 +1,5 @@
 package com.panda.ServletDemo.mvcframework.util;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.panda.ServletDemo.mvcframework.HandlerExceptionResolver;
 import com.panda.ServletDemo.mvcframework.HandlerInvoker;
 import com.panda.ServletDemo.mvcframework.HandlerMapping;
@@ -14,11 +8,16 @@ import com.panda.ServletDemo.mvcframework.impl.DefaultHandlerExceptionResolver;
 import com.panda.ServletDemo.mvcframework.impl.DefaultHandlerInvoker;
 import com.panda.ServletDemo.mvcframework.impl.DefaultHandlerMapping;
 import com.panda.ServletDemo.mvcframework.impl.DefaultViewResolver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 实例工厂
  * @author pcongda
- *
+ * @version 1.0
  */
 public class InstanceFactory {
 	

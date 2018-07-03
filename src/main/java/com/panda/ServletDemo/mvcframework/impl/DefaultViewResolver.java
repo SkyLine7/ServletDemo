@@ -31,11 +31,12 @@ public class DefaultViewResolver implements ViewResolver{
 		//没有返回值，说明响应的不是json或者页面,直接返回
 		if (result == null) return ;
 
-		// 页面
+		//返回页面
 		if(result instanceof java.lang.String) {
 			String str = result.toString();
 			int index = str.indexOf(":");
-			if(index == -1) { //转发
+			//转发
+			if(index == -1) {
 				TemplateEngine engine = ContainerListener.templateEngine(request.getServletContext());
 		        WebContext context = new WebContext(request, response, request.getServletContext());      
 		        try {
@@ -46,9 +47,12 @@ public class DefaultViewResolver implements ViewResolver{
 					throw new RequsetException("加载thymeleaf模版引擎失败", e);
 				}
 			}else {
-				String prefix = str.substring(0, index);//前缀
-				String path = str.substring(index + 1);//路径
-				if(prefix.equals("r")) {//重定向
+				//得到前缀
+				String prefix = str.substring(0, index);
+				//得到路径
+				String path = str.substring(index + 1);
+				//重定向
+				if(prefix.equals("r")) {
 					try {
 						response.sendRedirect(request.getContextPath() + path);
 					} catch (IOException e) {
@@ -57,7 +61,8 @@ public class DefaultViewResolver implements ViewResolver{
 					}
 				}
 			}
-		}else if(result instanceof FreemarkerResponse){ //使用freemarker加载模版
+		//使用freemarker加载模版
+		}else if(result instanceof FreemarkerResponse){
 			try {
 				FreemarkerResponse freemarkerObj = (FreemarkerResponse)result;
 				Configuration config = ContainerListener.addFreemarkerConfig(request.getServletContext());
@@ -69,17 +74,18 @@ public class DefaultViewResolver implements ViewResolver{
 				logger.error("加载freemarker模版失败，原因是:{}",e.getMessage());
 				throw new RequsetException("加载freemarker模版失败", e);
 			}
-
-		} else{  // 返回json
+		//返回json对象
+		} else{
 			response.setContentType("application/json;charset=utf-8");
 			try {
-				if(result instanceof ResultResponse){//返回json数据
+				//返回json数据
+				if(result instanceof ResultResponse){
 					ResultResponse res = (ResultResponse)result;
 					Object entity = res.getData();
 					JSONObject json = new JSONObject();
 					
 					json.put("msg", res.getMsg());
-					json.put("code",res.getCode());//200
+					json.put("code",res.getCode());
 					json.put("data", JSONObject.toJSON(entity) != null ? JSONObject.toJSON(entity) : null);
 					
 					response.getWriter().println(json.toString());
@@ -87,7 +93,7 @@ public class DefaultViewResolver implements ViewResolver{
 				}
 			} catch (Exception e) {
 				logger.error(String.format("返回json数据失败:{}", e.getMessage()));
-				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);//500
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 				throw new ServiceException("服务器错误！",e);
 
 			}

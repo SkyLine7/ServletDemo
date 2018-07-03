@@ -7,7 +7,7 @@ import com.panda.ServletDemo.mvcframework.annotation.*;
 import com.panda.ServletDemo.mvcframework.bean.FreemarkerResponse;
 import com.panda.ServletDemo.mvcframework.bean.ResultResponse;
 import com.panda.ServletDemo.mvcframework.enums.MyRequestMethod;
-import com.panda.ServletDemo.util.ResultResponseUtil;
+import com.panda.ServletDemo.mvcframework.util.ResultResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

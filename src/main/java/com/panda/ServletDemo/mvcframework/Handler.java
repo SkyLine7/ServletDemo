@@ -23,14 +23,21 @@ import java.util.regex.Matcher;
 public class Handler implements Serializable{
 	
 	private static final long serialVersionUID = -5535386111271158957L;
-	
-	private Class<?> clazz; // Action类字节码对象
-	private Method method; // 保存映射的方法
-	private Matcher matcher; // 保存请求URL,支持正则表达式
-	private Map<MethodParam,Integer> param = new LinkedHashMap<>(); //保存方法参数顺序
-	private List<String> pathParamList = new LinkedList<>(); //路径上的参数名称
-	private int typeRange; //请求方法是否在Action定义内： 0：在，1：不在
-	private MyRequestMethod[] reqMethodTypes; // 限定请求方法类型
+
+	// Action类字节码对象
+	private Class<?> clazz;
+	// 保存映射的方法
+	private Method method;
+	// 保存请求URL,支持正则表达式
+	private Matcher matcher;
+	//保存方法参数顺序
+	private Map<MethodParam,Integer> param = new LinkedHashMap<>();
+	//路径上的参数名称
+	private List<String> pathParamList = new LinkedList<>();
+	//请求方法是否在Action定义内： 0：在，1：不在
+	private int typeRange;
+	// 限定请求方法类型
+	private MyRequestMethod[] reqMethodTypes;
 
 	public Handler(Class<?> clazz, Method method,int typeRange,List<String> pathParamList) {
 		this.clazz = clazz;
@@ -112,6 +119,7 @@ public class Handler implements Serializable{
 		Annotation[][] paramters =  method.getParameterAnnotations();
 		for (int i = 0; i < paramters.length; i++) {
 			for (Annotation a : paramters[i]) {
+				// 这里可以再优化，但是现在没想出来
 				if(a instanceof MyRequestParam){
 					String paramName = ((MyRequestParam)a).value();
 					if(!"".equals(paramName.trim())){
@@ -125,8 +133,7 @@ public class Handler implements Serializable{
 				}
 			}
 		}
-		
-		//提取方法中的参数
+		//提取方法中的参数:需要添加编译时参数：-parameter
 		Parameter[] params = method.getParameters();
 		for (int i = 0; i < params.length; i++) {
 			param.put(new MethodParam(params[i].getName(), params[i].getType()),i);

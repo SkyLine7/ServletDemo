@@ -8,16 +8,16 @@ import java.io.Serializable;
 
 /**
  * 封装http请求
- * 
  * @author pcongda
  *
  */
 public class Requestor implements Serializable {
 
 	private static final long serialVersionUID = -3064371760592711062L;
-
-	private String requestPath; // 请求路径
-	private MyRequestMethod[] requsetMethod; // 请求方法
+	//请求路径
+	private String requestPath;
+	//请求方法限定
+	private MyRequestMethod[] requsetMethod;
 	
 	/**
 	 * @param requestPath

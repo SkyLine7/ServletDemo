@@ -2,7 +2,7 @@ package com.panda.ServletDemo.mvcframework.bean;
 
 import java.io.Serializable;
 /**
- * 返回结果
+ * 封装返回结果
  * @author pcongda
  *
  */

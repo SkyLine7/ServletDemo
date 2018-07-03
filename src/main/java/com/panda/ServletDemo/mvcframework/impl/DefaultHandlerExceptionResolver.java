@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.panda.ServletDemo.mvcframework.HandlerExceptionResolver;
 import com.panda.ServletDemo.mvcframework.exception.RequsetException;
 import com.panda.ServletDemo.mvcframework.exception.ServiceException;
-import com.panda.ServletDemo.util.ResultResponseUtil;
+import com.panda.ServletDemo.mvcframework.util.ResultResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +37,6 @@ public class DefaultHandlerExceptionResolver implements HandlerExceptionResolver
 					e.printStackTrace();
                 }
             }else{
-	            response.setStatus(500);
 	            JSONObject json = new JSONObject();
 				json.put("msg",ResultResponseUtil.badRequest(e.getMessage()).getMsg());
 				json.put("code",ResultResponseUtil.badRequest(e.getMessage()).getCode());
@@ -64,7 +63,6 @@ public class DefaultHandlerExceptionResolver implements HandlerExceptionResolver
 		                e.printStackTrace();
 	                }
 	            }else{
-		            response.setStatus(500);
 		            JSONObject json = new JSONObject();
 					json.put("msg",ResultResponseUtil.serverError(e.getMessage()).getMsg());
 					json.put("code",ResultResponseUtil.serverError(e.getMessage()).getCode());

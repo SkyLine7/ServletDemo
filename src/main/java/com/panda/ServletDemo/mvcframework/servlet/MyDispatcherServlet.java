@@ -21,10 +21,12 @@ import java.io.IOException;
 /**
  * 前端控制器
  * @author pcongda
- *
+ * @version 1.0
  */
-@WebServlet(name = "myDispatcher",urlPatterns="/*",loadOnStartup= 0,initParams={@WebInitParam(name="contextConfigLocation",value="application.properties")}) //Tomcat容器启动时加载
+//Tomcat容器启动时加载
+@WebServlet(name = "myDispatcher",urlPatterns="/*",loadOnStartup= 0,initParams={@WebInitParam(name="contextConfigLocation",value="application.properties")})
 public class MyDispatcherServlet extends HttpServlet{
+
 	private static final long serialVersionUID = 1459365600624171271L;
 
 	private static final Logger logger = LoggerFactory.getLogger(MyDispatcherServlet.class);

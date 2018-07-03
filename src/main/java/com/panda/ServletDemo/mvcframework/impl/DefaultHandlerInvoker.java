@@ -223,6 +223,11 @@ public class DefaultHandlerInvoker implements HandlerInvoker{
         }
     }
 
+	/**
+	 * 检查方法是否存在及请求方法是否在限定内
+	 * @param handler
+	 * @param request
+	 */
 	private void checkHanderStatus(Handler handler,HttpServletRequest request) {
 		//未找到方法 抛出异常
 		if (handler == null) {

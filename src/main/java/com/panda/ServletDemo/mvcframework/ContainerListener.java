@@ -6,7 +6,7 @@ import com.panda.ServletDemo.mvcframework.annotation.MyRequsetMapping;
 import com.panda.ServletDemo.mvcframework.annotation.MyService;
 import com.panda.ServletDemo.mvcframework.bean.Requestor;
 import com.panda.ServletDemo.mvcframework.enums.MyRequestMethod;
-import com.panda.ServletDemo.util.StringUtil;
+import com.panda.ServletDemo.mvcframework.util.StringUtil;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.TemplateExceptionHandler;
@@ -49,7 +49,8 @@ public class ContainerListener implements ServletContextListener{
 	
 	//默认配置文件名称
 	private static final String SETTING_NAME = "application.properties";
-	
+
+	//创建配置文件对象
 	private Properties prop = new Properties();
 	
 	//保存所有className
@@ -68,7 +69,7 @@ public class ContainerListener implements ServletContextListener{
 		ServletContext servletContext = sce.getServletContext();
 		//thymeleaf 测试
 		servletContext.setAttribute("cxtPath", "thymeleaf测试正常");
-		//mvc初始化
+		//mvcframework初始化
 		initMvcFramework();
 	    //添加Servlet静态资源映射
 	    addServletMapping(servletContext);
@@ -107,17 +108,10 @@ public class ContainerListener implements ServletContextListener{
 	 * @author pcongda
 	 */
 	private void doLoadConfig(String location){
-		InputStream is = this.getClass().getClassLoader().getResourceAsStream(location);
-		try {
+		try (InputStream is = this.getClass().getClassLoader().getResourceAsStream(location);){
 			prop.load(is);
 		}catch (IOException e) {
 			logger.error("加载"+location+"配置文件出错!",e);
-		}finally{
-			try {
-				is.close();
-			} catch (IOException e) {
-				logger.error("关闭输入流出错!",e);
-			}
 		}
 	}
 	
@@ -132,7 +126,7 @@ public class ContainerListener implements ServletContextListener{
 		} catch (URISyntaxException e) {
 			logger.error("获取基础包url出错!",e);
 		}
-		//转为文件对象
+		//URI对象转为文件对象
 		File dir = new File(url.getPath());
 		//循环文件
 		for (File file : dir.listFiles()) {
@@ -195,7 +189,7 @@ public class ContainerListener implements ServletContextListener{
 	}
 	
 	/**
-	 * 类的依赖注入
+	 * 类的依赖注入:DI
 	 * @author pcongda
 	 */
 	private void doAutoWired() {
@@ -254,12 +248,12 @@ public class ContainerListener implements ServletContextListener{
 			if(!clazz.isAnnotationPresent(MyController.class)){
 				continue;
 			}
-			//获取类上的requestMapping注解的值
+			//再获取类上的requestMapping注解的值
 			if(clazz.isAnnotationPresent(MyRequsetMapping.class)){
 				baseUrl = clazz.getAnnotation(MyRequsetMapping.class).value();
 			}
 			
-			//获取该字节码对象方法对象(只获取public的就行了)
+			//获取该字节码对象方法对象(一般获取public的就行了)
 			Method[] methods =  clazz.getMethods();
 			
 			// 遍历所有方法，找到标注requsetMapping注解的
@@ -381,16 +375,16 @@ public class ContainerListener implements ServletContextListener{
 	 * 注册 及 配置 freemarkerServlet
 	 * @param sc
 	 */
-	private void registerFreemarker(ServletContext sc){
-		//注册freemarkerServlet
-		ServletRegistration freemarker = sc.addServlet("freemarker","freemarker.ext.servlet.FreemarkerServlet");
-		// 基本解析路径
-		freemarker.setInitParameter("TemplatePath","/templates/ftl/");
-		freemarker.setInitParameter("NoCache","true");
-		freemarker.setInitParameter("ContentType","text/html;charset=UTF-8");
-		freemarker.setInitParameter("template_update_delay", "0");
-		freemarker.setInitParameter("default_encoding", "UTF-8");
-		freemarker.setInitParameter("number_format", "0.##########");
-		freemarker.setInitParameter("freemarker", "*.ftl");
-	}
+//	private void registerFreemarker(ServletContext sc){
+//		//注册freemarkerServlet
+//		ServletRegistration freemarker = sc.addServlet("freemarker","freemarker.ext.servlet.FreemarkerServlet");
+//		// 基本解析路径
+//		freemarker.setInitParameter("TemplatePath","/templates/ftl/");
+//		freemarker.setInitParameter("NoCache","true");
+//		freemarker.setInitParameter("ContentType","text/html;charset=UTF-8");
+//		freemarker.setInitParameter("template_update_delay", "0");
+//		freemarker.setInitParameter("default_encoding", "UTF-8");
+//		freemarker.setInitParameter("number_format", "0.##########");
+//		freemarker.setInitParameter("freemarker", "*.ftl");
+//	}
 }

@@ -26,6 +26,7 @@ import java.util.Map;
  * 导出Excel：(xlsx格式)
  * Excel2007 以后
  * 适用于数据量大，支持单个sheet表104万条数据
+ * @author pcongda
  */
 public class SXSSFWorkbookUtil {
 	public static String DEFAULT_DATE_PATTERN="yyyy年MM月dd日";//默认日期格式

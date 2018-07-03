@@ -13,9 +13,11 @@ import java.io.Serializable;
 public class MethodParam implements Serializable{
 	
 	private static final long serialVersionUID = -963415862767544073L;
-	
-	private String name;  //参数名称
-	private Class<?> clazz;  //参数类型
+
+	//参数名称
+	private String name;
+	//参数类型
+	private Class<?> clazz;
 	
 	
 	public MethodParam(String name, Class<?> clazz) {

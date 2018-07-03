@@ -45,7 +45,8 @@ public class GetRequestWrapper extends HttpServletRequestWrapper{
 		
 		//GET方法 
 		try {
-			value = new String(value.getBytes("ISO-8859-1"), req.getCharacterEncoding());//转为UTF-8
+			//转为UTF-8
+			value = new String(value.getBytes("ISO-8859-1"), req.getCharacterEncoding());
 		} catch (UnsupportedEncodingException e) {
 			logger.error("不支持该编码!",e);
 			e.printStackTrace();

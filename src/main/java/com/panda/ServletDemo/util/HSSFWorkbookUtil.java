@@ -1,5 +1,6 @@
 package com.panda.ServletDemo.util;
 
+import com.panda.ServletDemo.mvcframework.util.StringUtil;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 
@@ -9,6 +10,7 @@ import java.text.ParseException;
  * 导出execl工具类:Excel2003
  * HSSFWorkbook工具类(导出xls格式文件)
  * 最多支持65535行，适用于一般数据量少导出
+ * @author pcongda
  */
 public class HSSFWorkbookUtil {
 

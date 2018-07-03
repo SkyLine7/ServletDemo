@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 默认处理器映射器
+ * 默认的处理器映射器
  * @author pcongda
  *
  */
@@ -54,24 +54,6 @@ public class DefaultHandlerMapping implements HandlerMapping{
                 break;
             }
 		}
-//		for (Map.Entry<Requestor, Handler> entity2 : actionMap.entrySet()) {
-//			//找hander.Mathcher不为null的
-//			if(entity2.getValue().getMatcher().matches()) {
-//				Requestor requstor = entity2.getKey();
-//				MyRequestMethod[] myMethod = requstor.getRequsetMethod();
-//				handler.setReqMethodTypes(myMethod);
-//				//判断请求方法类型是否包含页面请求类型
-//				if(myMethod.length > 0){
-//					handler.setTypeRange(1);
-//					for (int i = 0; i < myMethod.length; i++) {
-//						if(reqMethod.equals(myMethod[i].name())){
-//							handler.setTypeRange(0);
-//							break;
-//						}
-//					}
-//				}
-//			}
-//		}
 		return handler;
 	}
 

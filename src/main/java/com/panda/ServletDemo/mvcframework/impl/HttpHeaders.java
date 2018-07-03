@@ -5,6 +5,10 @@ import com.panda.ServletDemo.mvcframework.MultiValueMap;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * http 请求头
+ * @author pcongda
+ */
 public class HttpHeaders implements MultiValueMap<String,String>,Serializable{
 
 	private static final long serialVersionUID = 283676833158247346L;

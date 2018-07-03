@@ -21,9 +21,11 @@ public class outputXLS {
 	public void createData(HttpServletRequest request, HttpServletResponse response){
 		String sheetName = "导出为Excel";
 		String fileName = "测试数据.xls";
-		String[] title = new String[]{"星期一","星期二","星期三","星期四","星期五","星期六","星期日"}; // 显示列
+		// 显示列
+		String[] title = new String[]{"星期一","星期二","星期三","星期四","星期五","星期六","星期日"};
 		String[][] values = null;
-		List<String> list = new ArrayList<>(); //自定义list
+		//自定义list
+		List<String> list = new ArrayList<>();
 		list.add("1");
 		list.add("2");
 		list.add("3");
@@ -78,11 +80,13 @@ public class outputXLS {
 		String codedFileName = "";
 		try {
 			String agent = request.getHeader("USER-AGENT");
+			// ie
 			if (null != agent && -1 != agent.indexOf("MSIE") || null != agent
-					&& -1 != agent.indexOf("Trident")) {// ie
+					&& -1 != agent.indexOf("Trident")) {
 				String name = java.net.URLEncoder.encode(fileName, "UTF8");
 				codedFileName = name;
-			} else if (null != agent && -1 != agent.indexOf("Mozilla")) {// 火狐,chrome等
+			// 火狐,chrome等
+			} else if (null != agent && -1 != agent.indexOf("Mozilla")) {
 				codedFileName = new String(fileName.getBytes("UTF-8"), "iso-8859-1");
 			}
 		} catch (Exception e) {
