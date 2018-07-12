@@ -47,13 +47,11 @@ public class Requestor implements Serializable {
 
 	@Override
 	public int hashCode() {
-		//return super.hashCode();
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		//return super.equals(obj);
 		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 }
