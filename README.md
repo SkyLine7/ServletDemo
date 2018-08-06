@@ -22,15 +22,12 @@
 - 方法参数绑定支持 JavaBean 类型
 
 ### 注意事项
-- 请 clone dev_1.1分支，master分支未合并
 - IDE 建议 IDEA,Eclipse 亦可
 - Java 编译时添加参数： -parameters
 - JDK 版本使用 8 以上
 
 ### 已知BUG
 - @AutoWired 依赖注入为null
-- 服务器上未添加 javac 编译参数: -parameters
-
 ---
 
 ### 感谢您的阅读
