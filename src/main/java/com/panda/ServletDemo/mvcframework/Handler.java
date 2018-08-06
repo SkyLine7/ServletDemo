@@ -126,7 +126,7 @@ public class Handler implements Serializable{
 						param.put(new MethodParam(paramName, paramName.getClass()),i);
 					}
 				}else if(a instanceof MyPathVariable){
-					String pathName = ((MyRequestParam)a).value();
+					String pathName = ((MyPathVariable)a).value();
 					if(!"".equals(pathName.trim())){
 						param.put(new MethodParam(pathName, pathName.getClass()),i);
 					}
